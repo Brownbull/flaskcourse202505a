@@ -1,7 +1,6 @@
 from flask import Flask, request, redirect, url_for, render_template
 
 app = Flask(__name__)
-
 @app.route("/")
 def index():
   return render_template("index.html", page_name="Index")
@@ -9,7 +8,8 @@ def index():
 
 @app.route("/home", methods=["GET", "POST"])
 def home():
-  return render_template("home.html", number = 21)
+  data = [{"key": "value1"}, {"key": "value2"}]
+  return render_template("home.html", number = 21, data = data)             
 
 @app.route("/json")
 def json_response():

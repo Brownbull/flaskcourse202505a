@@ -5,3 +5,8 @@
 {%else%}
     <h1>Number {{ number }} is less than or equal to 10</h1>
 {%endif%}
+
+{%for item in data%}
+    <h2>key: {{item.key}}</h2>
+{%endfor%}
+
