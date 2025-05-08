@@ -1,10 +1,11 @@
-from flask import Flask, request, redirect, url_for
+from flask import Flask, request, redirect, url_for, render_template
 
 app = Flask(__name__)
 
 @app.route("/")
 def index():
-  return "<h1>Hello, World!</h1>"
+  return render_template("index.html")
+# http://127.0.0.1:5000
 
 @app.route("/home", methods=["GET", "POST"])
 def home():
