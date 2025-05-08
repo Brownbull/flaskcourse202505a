@@ -1,4 +1,17 @@
+{% extends "base.html" %}
+{% block styles %}
+{{ super()}}
+<link rel="stylesheet" href="style.css">
+{% endblock %}
+
+{% block header %}
+
+{% block title %}Index{% endblock %}
+
+{% block body %}
+
 <h1>This is from template</h1>
+{% include "nav.html" %}
 <h2>Name of this page: {{page_name}}</h2>
 
-{% include "nav.html" %}
+{% endblock %}
