@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request
 
 app = Flask(__name__)
 
@@ -21,3 +21,11 @@ def json_response():
 @app.route("/dynamic/<name>")
 def dynamic_route(name):
   return f"<h1>Hello, {name}!</h1>"
+# http://127.0.0.1:5000/dynamic/asdasd
+
+@app.route("/query")
+def query_route():
+  name = request.args.get("name")
+  world = request.args.get("world")
+  return f"<h1>Hello, {name} and {world}!</h1>"
+# http://127.0.0.1:5000/query?name=asd%20asd&world=123
