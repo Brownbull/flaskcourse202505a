@@ -6,7 +6,8 @@ app = Flask(__name__)
 def index():
   return "<h1>Hello, World!</h1>"
 
-@app.route("/home")
+# @app.route("/home", methods=["POST"])
+@app.post("/home")
 def home():
   return "<h1>Welcome to the Home Page!</h1>"
 
