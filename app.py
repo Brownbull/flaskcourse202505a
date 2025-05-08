@@ -4,7 +4,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-  return render_template("index.html")
+  return render_template("index.html", page_name="Index")
 # http://127.0.0.1:5000
 
 @app.route("/home", methods=["GET", "POST"])
