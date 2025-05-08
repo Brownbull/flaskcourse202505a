@@ -43,3 +43,18 @@ def form_route():
             <input type='submit'>\
           </form>"
 # http://127.0.0.1:5000/form
+
+@app.route("/input_json", methods=["POST"])
+def input_json_route():
+  data = request.get_json()
+  name = data.get("name")
+  age = data.get("age")
+  return f"<h1>Name: {name}, Age: {age}</h1>"
+# http://127.0.0.1:5000/input_json
+"""
+{
+    "name": "Gabe",
+    "age": 36
+}
+"""
+
