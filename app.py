@@ -29,3 +29,17 @@ def query_route():
   world = request.args.get("world")
   return f"<h1>Hello, {name} and {world}!</h1>"
 # http://127.0.0.1:5000/query?name=asd%20asd&world=123
+
+@app.route("/form", methods=["GET", "POST"])
+def form_route():
+  if request.method == "POST":
+    user_input = request.form["user_input"]
+    return f"<h1>You entered: {user_input}</h1>"
+  else:
+    # Display the form
+    pass
+  return "<form method='POST'>\
+            <input type='text' name='user_input'>\
+            <input type='submit'>\
+          </form>"
+# http://127.0.0.1:5000/form
