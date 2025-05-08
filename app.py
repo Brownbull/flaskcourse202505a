@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, redirect, url_for
 
 app = Flask(__name__)
 
@@ -6,7 +6,7 @@ app = Flask(__name__)
 def index():
   return "<h1>Hello, World!</h1>"
 
-@app.route("/home", methods=["POST"])
+@app.route("/home", methods=["GET", "POST"])
 def home():
   return "<h1>Welcome to the Home Page!</h1>"
 
@@ -34,7 +34,9 @@ def query_route():
 def form_route():
   if request.method == "POST":
     user_input = request.form["user_input"]
-    return f"<h1>You entered: {user_input}</h1>"
+    print(user_input)
+    # Process the input as needed
+    return redirect(url_for("home"))
   else:
     # Display the form
     pass
