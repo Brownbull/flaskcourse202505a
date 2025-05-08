@@ -9,7 +9,7 @@ def index():
 
 @app.route("/home", methods=["GET", "POST"])
 def home():
-  return "<h1>Welcome to the Home Page!</h1>"
+  return render_template("home.html", number = 21)
 
 @app.route("/json")
 def json_response():
