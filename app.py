@@ -17,17 +17,27 @@ class User(db.Model):
   def __repr__(self):
     return f"<User {self.name}>"
   
+order_product_table = db.Table("order_product_table",
+  db.Column("order_id", db.Integer, db.ForeignKey("order.id"), primary_key=True),
+  db.Column("product_id", db.Integer, db.ForeignKey("product.id"), primary_key=True))
+  
 class Order(db.Model):
   id = db.Column(db.Integer, primary_key=True)
-  product_name = db.Column(db.String(100), nullable=False)
   quantity = db.Column(db.Integer, nullable=False)
-  total_price = db.Column(db.Integer, nullable=False)
-
   user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+
   user = db.relationship("User", back_populates="orders")
+  products = db.relationship("Product", secondary=order_product_table, backref="orders")
+
+class Product(db.Model):
+  id = db.Column(db.Integer, primary_key=True)
+  name = db.Column(db.String(100), nullable=False)
+  price = db.Column(db.Float, nullable=False)
+
+  orders = db.relationship("Order", secondary=order_product_table, backref="products")
 
   def __repr__(self):
-    return f"<Order {self.product_name}>"
+    return f"<Product {self.name}>"
 
 
 @app.route("/")
