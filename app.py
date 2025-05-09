@@ -23,18 +23,21 @@ order_product_table = db.Table("order_product_table",
   
 class Order(db.Model):
   id = db.Column(db.Integer, primary_key=True)
-  quantity = db.Column(db.Integer, nullable=False)
+  total_price = db.Column(db.Float, nullable=False, default=0.0)
+
   user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
-
   user = db.relationship("User", back_populates="orders")
-  products = db.relationship("Product", secondary=order_product_table, backref="orders")
 
+  products = db.relationship("Product", secondary = order_product_table, back_populates="orders")
+  def __repr__(self):
+    return f"<Order {self.id}>"
+  
 class Product(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   name = db.Column(db.String(100), nullable=False)
   price = db.Column(db.Float, nullable=False)
 
-  orders = db.relationship("Order", secondary=order_product_table, backref="products")
+  orders = db.relationship("Order", secondary=order_product_table, back_populates="products")
 
   def __repr__(self):
     return f"<Product {self.name}>"
@@ -122,19 +125,10 @@ def insert_data():
 
   # Orders Insertion
   new_order_1 = Order(
-    product_name = "Laptop", 
-    quantity = 1, 
-    total_price = 1000, 
     user = new_user_1)
   new_order_2 = Order(
-    product_name = "Mouse", 
-    quantity = 2, 
-    total_price = 50, 
     user = new_user_1)
   new_order_3 = Order(
-    product_name = "Keyboard", 
-    quantity = 1, 
-    total_price = 100, 
     user = new_user_2)
   
   inserted_orders = [new_order_1, new_order_2, new_order_3]
@@ -168,4 +162,28 @@ def query_data():
     print(f"User ID: {user.id}, Name: {user.name}, Date Joined: {user.date_joined}, Email: {user.email}")
     for order in user.orders:
       print(f"  Order ID: {order.id}, Product Name: {order.product_name}, Quantity: {order.quantity}, Total Price: {order.total_price}")
+
+def add_product_to_order():
+  product_1 = Product(
+    name="Laptop", 
+    price=1200)
+  product_2 = Product(
+    name="Mouse", 
+    price=24)
+  product_3 = Product(
+    name="Keyboard", 
+    price=110)
+  
+  inserted_products = [product_1, product_2, product_3]
+  db.session.add_all(inserted_products)
+
+  order_1 = Order.query.filter_by(id=1).first()
+  order_1.products.append(product_1)
+  order_1.products.append(product_2)
+
+  order_2 = Order.query.filter_by(id=2).first()
+  order_2.products.append(product_3)
+
+  db.session.commit()
+  print("Data inserted successfully!")
 

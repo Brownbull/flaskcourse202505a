@@ -1,11 +1,17 @@
 # init
 $ flask shell
 >>> db.create_all()
+>>> from app import *
 
 # insert
 $ flask shell
 >>> from app import insert_data
 >>> insert_data()
+
+# insert NtoN
+$ flask shell
+>>> from app import add_product_to_order
+>>> add_product_to_order()
 
 # query
 $ flask shell
