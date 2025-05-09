@@ -194,3 +194,11 @@ def query_order_products():
     for product in order.products:
       print(f"  Product ID: {product.id}, Name: {product.name}, Price: {product.price}")
 
+def get_all_users():
+  users = User.query.all()
+  user_count = User.query.count()
+  print(f"Total Users: {user_count}")
+  print("Users:")
+  for user in users:
+    print(f"User ID: {user.id}, Name: {user.name}, Date Joined: {user.date_joined}, Email: {user.email}")
+  return users
