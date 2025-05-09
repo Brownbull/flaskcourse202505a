@@ -12,9 +12,22 @@ class User(db.Model):
   date_joined = db.Column(db.DateTime, default=db.func.current_timestamp())
   email = db.Column(db.String(120), unique=True, nullable=False)
 
+  orders = db.relationship("Order", back_populates="user")
+
   def __repr__(self):
     return f"<User {self.name}>"
+  
+class Order(db.Model):
+  id = db.Column(db.Integer, primary_key=True)
+  product_name = db.Column(db.String(100), nullable=False)
+  quantity = db.Column(db.Integer, nullable=False)
+  total_price = db.Column(db.Integer, nullable=False)
 
+  user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+  user = db.relationship("User", back_populates="orders")
+
+  def __repr__(self):
+    return f"<Order {self.product_name}>"
 
 
 @app.route("/")

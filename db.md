@@ -21,3 +21,7 @@ Data deleted successfully!
 >>> delete_data_by_id(2)
 User not found.
 
+# one to many
+## do changes then
+$ flask shell
+>>> db.create_all()
