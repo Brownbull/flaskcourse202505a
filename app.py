@@ -86,3 +86,12 @@ def insert_data():
   db.session.add(new_user)
   db.session.commit()
   print("Data inserted successfully!")
+
+def update_data_by_id(id):
+  user = User.query.filter_by(id=id).first()
+  if user:
+    user.name = "Gabriel"
+    db.session.commit()
+    print("Data updated successfully!")
+  else:
+    print("User not found.")
