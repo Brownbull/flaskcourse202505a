@@ -187,3 +187,10 @@ def add_product_to_order():
   db.session.commit()
   print("Data inserted successfully!")
 
+def query_order_products():
+  orders = Order.query.all()
+  for order in orders:
+    print(f"Order ID: {order.id}, Total Price: {order.total_price}")
+    for product in order.products:
+      print(f"  Product ID: {product.id}, Name: {product.name}, Price: {product.price}")
+
