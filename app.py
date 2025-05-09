@@ -92,11 +92,45 @@ def input_json_route():
 
 def insert_data():
   from datetime import datetime
-  new_user = User(
+
+  # Users Insertion
+  new_user_1 = User(
     name="Gabe", 
     date_joined=datetime.now(), 
     email="carcamo.gabriel@gmail.com")
-  db.session.add(new_user)
+  new_user_2 = User(
+    name="Alejo", 
+    date_joined=datetime(2023, 10, 1), 
+    email="brownbullforest@gmail.com")
+  new_user_3 = User(
+    name="Clau", 
+    date_joined=datetime(2024, 10, 1), 
+    email="cldpn@yahoo.com")
+
+  inserted_users = [new_user_1, new_user_2, new_user_3]
+  db.session.add_all(inserted_users)
+
+  # Orders Insertion
+  new_order_1 = Order(
+    product_name = "Laptop", 
+    quantity = 1, 
+    total_price = 1000, 
+    user = new_user_1)
+  new_order_2 = Order(
+    product_name = "Mouse", 
+    quantity = 2, 
+    total_price = 50, 
+    user = new_user_1)
+  new_order_3 = Order(
+    product_name = "Keyboard", 
+    quantity = 1, 
+    total_price = 100, 
+    user = new_user_2)
+  
+  inserted_orders = [new_order_1, new_order_2, new_order_3]
+  db.session.add_all(inserted_orders)
+  
+  # Commit the changes to the database
   db.session.commit()
   print("Data inserted successfully!")
 
