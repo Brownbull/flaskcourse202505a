@@ -77,3 +77,12 @@ def input_json_route():
 }
 """
 
+def insert_data():
+  from datetime import datetime
+  new_user = User(
+    name="Gabe", 
+    date_joined=datetime.now(), 
+    email="carcamo.gabriel@gmail.com")
+  db.session.add(new_user)
+  db.session.commit()
+  print("Data inserted successfully!")
