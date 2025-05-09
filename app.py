@@ -152,3 +152,10 @@ def delete_data_by_id(id):
   else:
     print("User not found.")
 
+def query_data():
+  users = User.query.all()
+  for user in users:
+    print(f"User ID: {user.id}, Name: {user.name}, Date Joined: {user.date_joined}, Email: {user.email}")
+    for order in user.orders:
+      print(f"  Order ID: {order.id}, Product Name: {order.product_name}, Quantity: {order.quantity}, Total Price: {order.total_price}")
+

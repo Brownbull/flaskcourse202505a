@@ -7,6 +7,11 @@ $ flask shell
 >>> from app import insert_data
 >>> insert_data()
 
+# query
+$ flask shell
+>>> from app import query_data
+>>> query_data()
+
 # update
 >>> from app import update_data_by_id
 >>> update_data_by_id(1)
