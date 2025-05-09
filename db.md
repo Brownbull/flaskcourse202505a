@@ -14,3 +14,10 @@ Data updated successfully!
 >>> update_data_by_id(2)
 User not found.
 
+# delete
+>>> from app import delete_data_by_id
+>>> delete_data_by_id(1)
+Data deleted successfully!
+>>> delete_data_by_id(2)
+User not found.
+

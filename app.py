@@ -95,3 +95,13 @@ def update_data_by_id(id):
     print("Data updated successfully!")
   else:
     print("User not found.")
+
+def delete_data_by_id(id):
+  user = User.query.filter_by(id=id).first()
+  if user:
+    db.session.delete(user)
+    db.session.commit()
+    print("Data deleted successfully!")
+  else:
+    print("User not found.")
+

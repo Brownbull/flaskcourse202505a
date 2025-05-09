@@ -1,0 +1,127 @@
+Updatecheck<|||>3<|||>1
+DoUsageStatistics<|||>3<|||>1
+UpdatecheckLastrun<|||>1<|||>2025-05-09 14:17:09
+LastUsageStatisticCall<|||>1<|||>2025-05-09 14:17:10
+LastSessions<|||>1<|||>UdFlask
+LastActiveSession<|||>1<|||>UdFlask
+SessionManager_WindowLeft<|||>3<|||>586
+SessionManager_WindowTop<|||>3<|||>234
+ColWidths_connform.ListSessions<|||>1<|||>163,50,50,50,50,50,10
+ColsVisible_connform.ListSessions<|||>1<|||>0,1,4,6
+ColPositions_connform.ListSessions<|||>1<|||>0,1,2,3,4,5,6
+ColSort_connform.ListSessions<|||>1<|||>0,0
+SQL Attr Comment Foreground<|||>3<|||>8023636
+SQL Attr Comment Background<|||>3<|||>536870911
+SQL Attr Comment Style<|||>3<|||>2
+SQL Attr ConditionalComment Foreground<|||>3<|||>12108397
+SQL Attr ConditionalComment Background<|||>3<|||>536870911
+SQL Attr ConditionalComment Style<|||>3<|||>2
+SQL Attr ConsoleOutput Foreground<|||>3<|||>536870911
+SQL Attr ConsoleOutput Background<|||>3<|||>536870911
+SQL Attr ConsoleOutput Style<|||>3<|||>5
+SQL Attr DataType Foreground<|||>3<|||>15372999
+SQL Attr DataType Background<|||>3<|||>536870911
+SQL Attr DataType Style<|||>3<|||>1
+SQL Attr DefaultPackages Foreground<|||>3<|||>536870911
+SQL Attr DefaultPackages Background<|||>3<|||>536870911
+SQL Attr DefaultPackages Style<|||>3<|||>1
+SQL Attr DelimitedIdentifier Foreground<|||>3<|||>16757122
+SQL Attr DelimitedIdentifier Background<|||>3<|||>536870911
+SQL Attr DelimitedIdentifier Style<|||>3<|||>0
+SQL Attr Exception Foreground<|||>3<|||>536870911
+SQL Attr Exception Background<|||>3<|||>536870911
+SQL Attr Exception Style<|||>3<|||>2
+SQL Attr Function Foreground<|||>3<|||>14929603
+SQL Attr Function Background<|||>3<|||>536870911
+SQL Attr Function Style<|||>3<|||>1
+SQL Attr Identifier Foreground<|||>3<|||>16757122
+SQL Attr Identifier Background<|||>3<|||>536870911
+SQL Attr Identifier Style<|||>3<|||>0
+SQL Attr Key Foreground<|||>3<|||>14929603
+SQL Attr Key Background<|||>3<|||>536870911
+SQL Attr Key Style<|||>3<|||>1
+SQL Attr Number Foreground<|||>3<|||>7361535
+SQL Attr Number Background<|||>3<|||>536870911
+SQL Attr Number Style<|||>3<|||>0
+SQL Attr PLSQL-ReservedWord Foreground<|||>3<|||>536870911
+SQL Attr PLSQL-ReservedWord Background<|||>3<|||>536870911
+SQL Attr PLSQL-ReservedWord Style<|||>3<|||>1
+SQL Attr ProcName Foreground<|||>3<|||>536870911
+SQL Attr ProcName Background<|||>3<|||>536870911
+SQL Attr ProcName Style<|||>3<|||>0
+SQL Attr Space Foreground<|||>3<|||>536870911
+SQL Attr Space Background<|||>3<|||>536870911
+SQL Attr Space Style<|||>3<|||>0
+SQL Attr SQLPlus-Command Foreground<|||>3<|||>536870911
+SQL Attr SQLPlus-Command Background<|||>3<|||>536870911
+SQL Attr SQLPlus-Command Style<|||>3<|||>1
+SQL Attr String Foreground<|||>3<|||>8906947
+SQL Attr String Background<|||>3<|||>536870911
+SQL Attr String Style<|||>3<|||>0
+SQL Attr Symbol Foreground<|||>3<|||>12897152
+SQL Attr Symbol Background<|||>3<|||>536870911
+SQL Attr Symbol Style<|||>3<|||>0
+SQL Attr TableName Foreground<|||>3<|||>6911735
+SQL Attr TableName Background<|||>3<|||>536870911
+SQL Attr TableName Style<|||>3<|||>0
+SQL Attr Variable Foreground<|||>3<|||>7064575
+SQL Attr Variable Background<|||>3<|||>536870911
+SQL Attr Variable Style<|||>3<|||>0
+SQLColMatchingBraceForeground<|||>1<|||>$0028EFFF
+SQLColMatchingBraceBackground<|||>1<|||>$004D513B
+Theme<|||>1<|||>Charcoal Dark Slate
+FieldColor_Numeric<|||>3<|||>16750469
+FieldColor_Real<|||>3<|||>13663613
+FieldColor_Text<|||>3<|||>7591283
+FieldColor_Binary<|||>3<|||>13203071
+FieldColor_Datetime<|||>3<|||>7566281
+FieldColor_Spatial<|||>3<|||>13553267
+FieldColor_Other<|||>3<|||>7586241
+FieldEditor_Set<|||>3<|||>1
+ThemePreviewWidth<|||>3<|||>890
+ThemePreviewHeight<|||>3<|||>594
+Servers\UdFlask\SessionCreated<|||>1<|||>2025-05-09 14:17:23
+Servers\UdFlask\Host<|||>1<|||>C:\Clouds\OneDrive\Projects\udemy\The Ultimate Flask Course\instance\db.sqlite3
+Servers\UdFlask\WindowsAuth<|||>3<|||>0
+Servers\UdFlask\CleartextPluginEnabled<|||>3<|||>0
+Servers\UdFlask\User<|||>1<|||>
+Servers\UdFlask\Password<|||>1<|||>9
+Servers\UdFlask\LoginPrompt<|||>3<|||>0
+Servers\UdFlask\Port<|||>1<|||>0
+Servers\UdFlask\NetType<|||>3<|||>10
+Servers\UdFlask\Compressed<|||>3<|||>0
+Servers\UdFlask\LocalTimeZone<|||>3<|||>0
+Servers\UdFlask\QueryTimeout<|||>3<|||>30
+Servers\UdFlask\KeepAlive<|||>3<|||>20
+Servers\UdFlask\FullTableStatus<|||>3<|||>1
+Servers\UdFlask\Databases<|||>1<|||>
+Servers\UdFlask\Library<|||>1<|||>sqlite3mc.dll
+Servers\UdFlask\Comment<|||>1<|||>Udemy Flask course
+Servers\UdFlask\StartupScriptFilename<|||>1<|||>
+Servers\UdFlask\TreeBackground<|||>3<|||>536870911
+Servers\UdFlask\SSHtunnelActive<|||>3<|||>0
+Servers\UdFlask\SshExecutable<|||>1<|||>
+Servers\UdFlask\SSHtunnelHost<|||>1<|||>
+Servers\UdFlask\SSHtunnelHostPort<|||>3<|||>22
+Servers\UdFlask\SSHtunnelUser<|||>1<|||>
+Servers\UdFlask\SSHtunnelPassword<|||>1<|||>6
+Servers\UdFlask\SSHtunnelTimeout<|||>3<|||>4
+Servers\UdFlask\SSHtunnelPrivateKey<|||>1<|||>
+Servers\UdFlask\SSHtunnelPort<|||>3<|||>3307
+Servers\UdFlask\SSL_Active<|||>3<|||>0
+Servers\UdFlask\SSL_Key<|||>1<|||>
+Servers\UdFlask\SSL_Cert<|||>1<|||>
+Servers\UdFlask\SSL_CA<|||>1<|||>
+Servers\UdFlask\SSL_Cipher<|||>1<|||>
+Servers\UdFlask\SSL_Verification<|||>3<|||>2
+Servers\UdFlask\IgnoreDatabasePattern<|||>1<|||>
+Servers\UdFlask\LogFileDdl<|||>3<|||>0
+Servers\UdFlask\LogFileDml<|||>3<|||>0
+Servers\UdFlask\LogFilePath<|||>1<|||>C:\Users\usuario\AppData\Roaming\HeidiSQL\Logs\%session\%db\%y%m%d.sql
+Servers\UdFlask\RefusedCount<|||>3<|||>6
+Servers\UdFlask\ServerVersionFull<|||>1<|||>3.48.0
+Servers\UdFlask\ConnectCount<|||>3<|||>1
+Servers\UdFlask\ServerVersion<|||>3<|||>34800
+Servers\UdFlask\LastConnect<|||>1<|||>2025-05-09 14:21:16
+Servers\UdFlask\lastUsedDB<|||>1<|||>db
+Servers\UdFlask\QueryHistory\1<|||>1<|||>2025-05-09 14:22:59|db|0|select * from user<{{{><}}}>where id = 1;
