@@ -35,18 +35,28 @@ class Member(db.Model):
 
     def to_json(self):
         """Convert the Member instance to a JSON serializable dictionary."""
+        interest_in_topics_json = [{'id': topic.id, 'name': topic.name} for topic in self.interest_in_topics]
+
+        language_json = {}
+        fav_language = Language.query.get(self.fav_language)
+        if self.fav_language:
+            language_json = {
+                'id': fav_language.id,
+                'name': fav_language.name
+            }
+
         member_json = {
             'id': self.id,
             'email': self.email,
             'location': self.location,
             'first_learn_date': datetime.strftime(self.first_learn_date, '%Y-%m-%d') if self.first_learn_date else '', 
             # 'first_learn_date': self.first_learn_date.isoformat() if self.first_learn_date else None,
-            'fav_language': self.fav_language,
+            'fav_language': language_json,
             'about': self.about,
             'learn_new_interest': self.learn_new_interest,
-            'interest_in_topics': [{'id': topic.id, 'name': topic.name} for topic in self.interest_in_topics]
+            'interest_in_topics': interest_in_topics_json
         }
-        
+
         return member_json
 
 
