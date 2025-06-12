@@ -1,3 +1,5 @@
+from werkzeug.security import generate_password_hash
+
 from .extensions import db
 
 member_topic_table = db.Table(
@@ -23,6 +25,12 @@ class Member(db.Model):
         backref=db.backref('topic', lazy=True)
     )
 
+    @property
+    def password(self):
+        raise AttributeError('Cannot read password attribute')
+    @password.setter
+    def password(self, password):
+        self.password_hash = generate_password_hash(password)
 
 class Language(db.Model):
     id = db.Column(db.Integer, primary_key=True)
