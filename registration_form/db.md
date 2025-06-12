@@ -8,34 +8,21 @@ $ flask shell
 
 # insert
 $ flask shell
->>> from app import insert_data
->>> insert_data()
+>>> from registration_form import create_app
+>>> from registration_form.extensions import db
+>>> from registration_form.models import Language, Topic
+>>> python = Language(name='Python')
+>>> javascript = Language(name='Javascript')
+>>> php = Language(name='PHP')
+>>> ruby = Language(name='Ruby')
+>>> c = Language(name='C')
+>>> go = Language(name='Go')
+>>> web_apps = Topic(name='Web Apps')
+>>> mobile_apps = Topic(name='Mobile Apps')
+>>> api = Topic(name='APIs')
+>>> app = create_app()
+>>> app.app_context().push()
+>>> db.session.add_all([python, javascript, php, ruby, c, go])
+>>> db.session.add_all([web_apps, mobile_apps, api])
+>>> db.session.commit()
 
-# insert NtoN
-$ flask shell
->>> from app import add_product_to_order
->>> add_product_to_order()
-
-# query
-$ flask shell
->>> from app import query_data
->>> query_data()
-
-# update
->>> from app import update_data_by_id
->>> update_data_by_id(1)
-Data updated successfully!
->>> update_data_by_id(2)
-User not found.
-
-# delete
->>> from app import delete_data_by_id
->>> delete_data_by_id(1)
-Data deleted successfully!
->>> delete_data_by_id(2)
-User not found.
-
-# one to many
-## do changes then
-$ flask shell
->>> db.create_all()
