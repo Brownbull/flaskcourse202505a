@@ -1,6 +1,8 @@
+from datetime import datetime
 from flask import Blueprint, render_template, request
 
-from .models import Language, Topic
+from .models import Language, Topic, Member
+from .extensions import db
 
 main = Blueprint('main', __name__)
 
@@ -17,14 +19,34 @@ def index():
         learn_new_interest = request.form['learn_new_interest']
         interest_in_topics = request.form.getlist('interest_in_topics')
 
-        print('Email: ', email)
-        print('Password: ', password)
-        print('Location: ', location)
-        print('First Learn Date: ', first_learn_date)
-        print('Fav Language: ', fav_language)
-        print('About: ', about)
-        print('Learn New Interest: ', learn_new_interest)
-        print('Interest In Topics: ', interest_in_topics)
+        # print('Email: ', email)
+        # print('Password: ', password)
+        # print('Location: ', location)
+        # print('First Learn Date: ', first_learn_date)
+        # print('Fav Language: ', fav_language)
+        # print('About: ', about)
+        # print('Learn New Interest: ', learn_new_interest)
+        # print('Interest In Topics: ', interest_in_topics)
+
+        member = Member(
+            email = email,
+            password = password,
+            location = location,
+            first_learn_date = datetime.strptime(first_learn_date, '%Y-%m-%d') if first_learn_date else None,
+            fav_language = fav_language,
+            about = about,
+            learn_new_interest = True if learn_new_interest == "Yes" else False,
+        )
+
+        db.session.add(member)
+        for topic_id in interest_in_topics:
+            topic = Topic.query.get(topic_id)
+            if topic:
+                member.interest_in_topics.append(topic)
+
+        db.session.commit()
+        print('Member added to database:', member)
+
         return "Form submitted successfully!"
     
     languages = Language.query.all()
