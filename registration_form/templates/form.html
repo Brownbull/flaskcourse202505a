@@ -21,104 +21,106 @@
   </section>
   <section class="section">
     <div class="container">
-      <div class="field">
-        <label class="label">Email</label>
-        <div class="control">
-          <input class="input" type="email" placeholder="Email">
+      <form method="POST" action="{{ url_for('main.index') }}">
+        <div class="field">
+          <label class="label">Email</label>
+          <div class="control">
+            <input class="input" type="email" name="email" placeholder="Email">
+          </div>
+          <p class="help is-danger"></p>
         </div>
-        <p class="help is-danger"></p>
-      </div>
 
-      <div class="field">
-        <label class="label">Password</label>
-        <div class="control">
-          <input class="input" type="password" placeholder="Password">
+        <div class="field">
+          <label class="label">Password</label>
+          <div class="control">
+            <input class="input" type="password" name="password" placeholder="Password">
+          </div>
+          <p class="help is-danger"></p>
         </div>
-        <p class="help is-danger"></p>
-      </div>
 
-      <div class="field">
-        <label class="label">Location</label>
-        <div class="control">
-          <input class="input" type="text" placeholder="Location">
+        <div class="field">
+          <label class="label">Location</label>
+          <div class="control">
+            <input class="input" type="text" name="location" placeholder="Location">
+          </div>
+          <p class="help is-danger"></p>
         </div>
-        <p class="help is-danger"></p>
-      </div>
 
-      <div class="field">
-        <label class="label">When Did You First Learn to Code?</label>
-        <div class="control">
-          <input class="input" type="date">
+        <div class="field">
+          <label class="label">When Did You First Learn to Code?</label>
+          <div class="control">
+            <input class="input" type="date" name="first_learn_date">
+          </div>
+          <p class="help is-danger"></p>
         </div>
-        <p class="help is-danger"></p>
-      </div>
 
-      <div class="field">
-        <label class="label">Your Favorite Programming Language</label>
-        <div class="control">
-          <div class="select">
-            <select>
-              <option>Python</option>
-              <option>JavaScript</option>
-              <option>PHP</option>
-              <option>Ruby</option>
-              <option>C++</option>
-              <option>Go</option>
-            </select>
+        <div class="field">
+          <label class="label">Your Favorite Programming Language</label>
+          <div class="control">
+            <div class="select">
+              <select name="fav_language">
+                <option value="1">Python</option>
+                <option value="2">JavaScript</option>
+                <option>PHP</option>
+                <option>Ruby</option>
+                <option>C++</option>
+                <option>Go</option>
+              </select>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="field">
-        <label class="label">Tell Me About Yourself</label>
-        <div class="control">
-          <textarea class="textarea" placeholder="I am..."></textarea>
+        <div class="field">
+          <label class="label">Tell Me About Yourself</label>
+          <div class="control">
+            <textarea class="textarea" name="about" placeholder="I am..."></textarea>
+          </div>
+          <p class="help is-danger"></p>
         </div>
-        <p class="help is-danger"></p>
-      </div>
 
-      <div class="field">
-        <div class="control">
-          <label class="checkbox">
-            What do you want to learn?
-          </label>
-          <label class="checkbox">
-            <input type="checkbox">
-            Web Apps
-          </label>
-          <label class="checkbox">
-            <input type="checkbox">
-            Mobile Apps
-          </label>
-          <label class="checkbox">
-            <input type="checkbox">
-            APIs
-          </label>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              What do you want to learn?
+            </label>
+            <label class="checkbox">
+              <input type="checkbox" value="1" name="interest_in_topics">
+              Web Apps
+            </label>
+            <label class="checkbox">
+              <input type="checkbox" value="2" name="interest_in_topics">
+              Mobile Apps
+            </label>
+            <label class="checkbox">
+              <input type="checkbox" value="3" name="interest_in_topics">
+              APIs
+            </label>
+          </div>
+          <p class="help is-danger"></p>
         </div>
-        <p class="help is-danger"></p>
-      </div>
 
-      <div class="field">
-        <div class="control">
-          <label class="radio">
-            Are you interested in learning a new language?
-          </label>
-          <label class="radio">
-            <input type="radio">
-            Yes
-          </label>
-          <label class="radio">
-            <input type="radio">
-            No
-          </label>
+        <div class="field">
+          <div class="control">
+            <label class="radio">
+              Are you interested in learning a new language?
+            </label>
+            <label class="radio">
+              <input type="radio" name="learn_new_interest">
+              Yes
+            </label>
+            <label class="radio">
+              <input type="radio" name="learn_new_interest">
+              No
+            </label>
+          </div>
         </div>
-      </div>
 
-      <div class="field is-grouped">
-        <div class="control">
-          <button class="button is-link">Submit</button>
+        <div class="field is-grouped">
+          <div class="control">
+            <button type="submit" class="button is-link">Submit</button>
+          </div>
         </div>
-      </div>
+      </form>
     </div>
   </section>
 </body>
