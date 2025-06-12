@@ -1,8 +1,8 @@
 from datetime import datetime
 from flask import Blueprint, render_template, request, redirect, url_for
 
-from .models import Language, Topic, Member
-from .extensions import db
+from registration_form.models import Language, Topic, Member
+from registration_form.extensions import db
 
 main = Blueprint('main', __name__)
 

@@ -1,7 +1,8 @@
 from flask import Flask
 
 from .extensions import db
-from .views import main
+from .views.main import main
+from .views.api import api
 
 def create_app(config_file='settings.py'):
     app = Flask(__name__)
@@ -11,5 +12,6 @@ def create_app(config_file='settings.py'):
     db.init_app(app)
 
     app.register_blueprint(main)
+    app.register_blueprint(api)
 
     return app
