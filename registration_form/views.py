@@ -1,5 +1,7 @@
 from flask import Blueprint, render_template, request
 
+from .models import Language, Topic
+
 main = Blueprint('main', __name__)
 
 @main.route('/', methods=['GET', 'POST'])
@@ -24,4 +26,13 @@ def index():
         print('Learn New Interest: ', learn_new_interest)
         print('Interest In Topics: ', interest_in_topics)
         return "Form submitted successfully!"
-    return render_template('form.html')
+    
+    languages = Language.query.all()
+    topics = Topic.query.all()
+
+    context = {
+        'languages': languages,
+        'topics': topics
+    }
+
+    return render_template('form.html', **context)
