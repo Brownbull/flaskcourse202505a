@@ -8,3 +8,8 @@ api = Blueprint('api', __name__)
 def get_members():
     members = Member.query.all()
     return jsonify({'members': [member.to_json() for member in members]}), 200
+
+@api.route('/member/<int:member_id>', methods=['GET'])
+def get_member(member_id):
+    member = Member.query.get_or_404(member_id)
+    return jsonify({'member': member.to_json()}), 200
