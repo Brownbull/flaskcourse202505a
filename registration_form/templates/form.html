@@ -21,11 +21,11 @@
   </section>
   <section class="section">
     <div class="container">
-      <form method="POST" action="{{ url_for('main.index') }}">
+      <form method="POST" action="{{ url_for('main.index', member_id=member_id) }}">
         <div class="field">
           <label class="label">Email</label>
           <div class="control">
-            <input class="input" type="email" name="email" placeholder="Email">
+            <input class="input" type="email" name="email" placeholder="Email" value="{{ member.email }}">
           </div>
           <p class="help is-danger"></p>
         </div>
@@ -41,7 +41,7 @@
         <div class="field">
           <label class="label">Location</label>
           <div class="control">
-            <input class="input" type="text" name="location" placeholder="Location">
+            <input class="input" type="text" name="location" placeholder="Location" value="{{ member.location }}">
           </div>
           <p class="help is-danger"></p>
         </div>
@@ -49,7 +49,7 @@
         <div class="field">
           <label class="label">When Did You First Learn to Code?</label>
           <div class="control">
-            <input class="input" type="date" name="first_learn_date">
+            <input class="input" type="date" name="first_learn_date" value="{{ member.first_learn_date.strftime('%Y-%m-%d') if member.first_learn_date else '' }}">
           </div>
           <p class="help is-danger"></p>
         </div>
@@ -60,7 +60,7 @@
             <div class="select">
               <select name="fav_language">
                 {% for language in languages %}
-                <option value="{{ language.id }}">{{ language.name }}</option>
+                <option value="{{ language.id }}" {% if language.id == member.fav_language %}selected{% endif %}>{{ language.name }}</option>
                 {% endfor %}
               </select>
             </div>
@@ -70,7 +70,7 @@
         <div class="field">
           <label class="label">Tell Me About Yourself</label>
           <div class="control">
-            <textarea class="textarea" name="about" placeholder="I am..."></textarea>
+            <textarea class="textarea" name="about" placeholder="I am...">{{ member.about }}</textarea>
           </div>
           <p class="help is-danger"></p>
         </div>
@@ -82,7 +82,7 @@
             </label>
             {% for topic in topics %}
             <label class="checkbox">
-              <input type="checkbox" value="{{ topic.id }}" name="interest_in_topics">
+              <input type="checkbox" value="{{ topic.id }}" name="interest_in_topics" {% if topic in member.interest_in_topics %}checked{% endif %}>
               {{ topic.name }}
             </label>
             {% endfor %}
@@ -96,11 +96,11 @@
               Are you interested in learning a new language?
             </label>
             <label class="radio">
-              <input type="radio" value="yes" name="learn_new_interest">
+              <input type="radio" value="yes" name="learn_new_interest" {% if member.learn_new_interest %}checked{% endif %}>
               Yes
             </label>
             <label class="radio">
-              <input type="radio" value="no" name="learn_new_interest">
+              <input type="radio" value="no" name="learn_new_interest" {% if not member.learn_new_interest %}checked{% endif %}>
               No
             </label>
           </div>
