@@ -1,4 +1,8 @@
 ### Python template
+
+# Course docs
+course_resources/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
