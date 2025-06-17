@@ -1,5 +1,3 @@
 # init
-$ flask shell
->>> db.create_all()
->>> from app import *
+$ flask create_tables
 
