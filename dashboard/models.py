@@ -12,7 +12,7 @@ class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     price = db.Column(db.Integer)
-    goal = db.Column(db.Integer)
+    monthly_goal = db.Column(db.Integer)
     
 class Order(db.Model):
     __tablename__ = 'orders'
