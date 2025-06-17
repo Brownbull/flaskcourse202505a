@@ -83,5 +83,3 @@ def update_member(member_id):
     except Exception as e:
         db.session.rollback()
         return jsonify({'error': str(e)}), 400
-
-    
