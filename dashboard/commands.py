@@ -1,5 +1,6 @@
 import click
 from random import randint, choice
+from datetime import datetime, timedelta
 
 from faker import Faker
 from flask.cli import with_appcontext
@@ -60,27 +61,20 @@ def create_orders():
 @click.command(name = 'test_query')
 @with_appcontext
 def test_query():
-    revenue_per_product = db.session.query(\
-        Product.name, \
-        func.sum(Order.quantity * Product.price))\
-        .join(Order)\
-        .group_by(Product.name)\
-        .all()
-    
     first_product = Product.query.get(1)
-    print(f"Revenue for {first_product.name} in the current month: {first_product.revenue_per_month()}")
 
-    monthly_earnings = db.session.query(\
-        func.extract('year', Order.order_date), \
-        func.extract('month', Order.order_date), \
-        func.sum(Order.quantity * Product.price),\
-        func.count())\
-        .join(Product)\
-        .group_by(\
-            func.extract('year', Order.order_date),
-            func.extract('month', Order.order_date))\
-        .all()
-    print(revenue_per_product)
+    beggining_of_day = datetime.today().replace(
+        hour=0, minute=0, second=0, microsecond=0
+        )
+    orders = Order.query.filter(
+        Order.order_date >= beggining_of_day
+        ).count()
+
+    print(f"get_monthly_earnings: \n{Order.get_monthly_earnings()}")
+    print(f"get_revenue_per_product: \n{Order.get_revenue_per_product()}")
+    # print(f"Revenue for {first_product.name} in the current month: {first_product.revenue_per_month()}")
+
+
 
 @click.command(name = 'test_SQL')
 @with_appcontext
