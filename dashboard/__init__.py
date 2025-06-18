@@ -1,6 +1,6 @@
 from flask import Flask
 
-from .commands import create_tables, create_products, create_orders
+from .commands import create_tables, create_products, create_orders, test_query, test_SQL
 from .extensions import db
 from .routes.auth import auth
 from .routes.main import main
@@ -18,5 +18,7 @@ def create_app(config_file='settings.py'):
     app.cli.add_command(create_tables)
     app.cli.add_command(create_products)
     app.cli.add_command(create_orders)
+    app.cli.add_command(test_query)
+    app.cli.add_command(test_SQL)
 
     return app
