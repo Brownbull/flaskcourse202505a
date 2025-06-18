@@ -66,6 +66,9 @@ def test_query():
         .join(Order)\
         .group_by(Product.name)\
         .all()
+    
+    first_product = Product.query.get(1)
+    print(f"Revenue for {first_product.name} in the current month: {first_product.revenue_per_month()}")
 
     monthly_earnings = db.session.query(\
         func.extract('year', Order.order_date), \
