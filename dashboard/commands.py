@@ -61,7 +61,6 @@ def create_orders():
 @click.command(name = 'test_query')
 @with_appcontext
 def test_query():
-    first_product = Product.query.get(1)
 
     beggining_of_day = datetime.today().replace(
         hour=0, minute=0, second=0, microsecond=0
