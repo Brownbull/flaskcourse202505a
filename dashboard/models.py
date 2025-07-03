@@ -1,4 +1,5 @@
 from datetime import datetime
+from flask_login import UserMixin
 from sqlalchemy import func
 from .extensions import db
 
@@ -62,8 +63,9 @@ class Order(db.Model):
             .all()
         return revenue_per_product
     
-
-
-    # customer = db.relationship('Customers', backref=db.backref('orders', lazy=True))
-    # product = db.relationship('Product', backref=db.backref('orders', lazy=True))
-
+class User(db.Model, UserMixin):
+    __tablename__ = 'users'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(150), unique=True, nullable=False)
+    password = db.Column(db.String(150), nullable=False)
