@@ -370,6 +370,10 @@
   <script src="{{ url_for('static', filename='js/demo/chart-pie-demo.js') }}"></script>
   <script src="{{ url_for('static', filename='js/demo/chart-bar-demo.js') }}"></script>
 
+  <script>
+    area_chart({{ monthly_earnings_arr|tojson }}, {{ months |tojson}});
+  </script>
+
 </body>
 
 </html>
