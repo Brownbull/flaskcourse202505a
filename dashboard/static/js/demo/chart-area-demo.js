@@ -1,5 +1,5 @@
 
-function area_chart(data, months) {
+function area_chart(data, last_12_months) {
   
   // Set new default font family and font color to mimic Bootstrap's default styling
   Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
@@ -34,7 +34,7 @@ function area_chart(data, months) {
   var myLineChart = new Chart(ctx, {
     type: 'line',
     data: {
-      labels: months,
+      labels: last_12_months,
       datasets: [{
         label: "Earnings",
         lineTension: 0.3,

@@ -51,13 +51,18 @@ def index():
     revenue_this_month = monthly_earnings[-1][2] if monthly_earnings else 0
 
     monthly_earnings_arr = []
+    monthly_orders_arr = []
 
     for earning in monthly_earnings[-12:]:
         monthly_earnings_arr.append(earning[2])
+        monthly_orders_arr.append(earning[3])
+
+    last_6_monthly_orders_arr = monthly_orders_arr[-6:]
 
     this_month = datetime.today().month
-    months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
-    months = months[this_month:] + months[:this_month]
+    last_12_months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+    last_12_months = last_12_months[this_month:] + last_12_months[:this_month]
+    last_6_months = last_12_months[-6:]
 
 
     revenue_per_product = Order.get_revenue_per_product()
@@ -77,9 +82,7 @@ def index():
         'total_revenue': total_revenue,
         'revenue_per_product_pct': revenue_per_product_pct,
         }
-    
-    print(f"Revenue per product data: {revenue_per_product_data}")
-    
+        
     context = {
         'orders_today': orders_today,
         'monthly_earnings': monthly_earnings[-1][2],
@@ -88,8 +91,10 @@ def index():
         'mothly_goal_percentage': mothly_goal_percentage,
         'revenue_this_month': revenue_this_month,
         'monthly_earnings_arr': monthly_earnings_arr,
-        'months': months,
+        'last_12_months': last_12_months,
+        'last_6_months': last_6_months,
         'revenue_per_product_data': revenue_per_product_data,
+        'last_6_monthly_orders_arr': last_6_monthly_orders_arr,
     }
     return render_template('index.html', **context)
 

@@ -367,8 +367,9 @@
   <script src="{{ url_for('static', filename='js/demo/chart-bar-demo.js') }}"></script>
 
   <script>
-    area_chart({{ monthly_earnings_arr|tojson }}, {{ months |tojson}});
+    area_chart({{ monthly_earnings_arr|tojson }}, {{ last_12_months |tojson}});
     pie_chart({{ revenue_per_product_data | tojson }});
+    bar_chart({{ last_6_monthly_orders_arr | tojson }}, {{ last_6_months | tojson }});
   </script>
 
 </body>
