@@ -100,4 +100,8 @@ def index():
 
 @main.route('/orders')
 def orders():
-    return render_template('tables.html')
+    orders = Order.query.all()
+    context = {
+        'orders': orders
+    }
+    return render_template('tables.html',  **context)

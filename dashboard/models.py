@@ -7,6 +7,7 @@ class Customer(db.Model):
     
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
+    orders = db.relationship('Order', backref='customer', lazy=True)
     
 class Product(db.Model):
     __tablename__ = 'products'
@@ -15,6 +16,7 @@ class Product(db.Model):
     name = db.Column(db.String(100), nullable=False)
     price = db.Column(db.Integer)
     monthly_goal = db.Column(db.Integer)
+    orders = db.relationship('Order', backref='product', lazy=True)
 
     def revenue_per_month(self):
         first_day_of_month = datetime.today().replace(
