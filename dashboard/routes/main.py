@@ -1,11 +1,13 @@
 from datetime import datetime
 from flask import Blueprint, render_template
+from flask_login import login_required
 
 from dashboard.models import Order, Product
 
 main = Blueprint('main', __name__)
 
 @main.route('/')
+@login_required
 def index():
     
     # orders_today
@@ -99,7 +101,9 @@ def index():
     return render_template('index.html', **context)
 
 @main.route('/orders')
+@login_required
 def orders():
+    
     orders = Order.query.all()
     context = {
         'orders': orders
