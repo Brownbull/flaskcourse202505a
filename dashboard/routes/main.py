@@ -42,7 +42,7 @@ def index():
             'monthly_goal': product.monthly_goal,
             'revenue': product.revenue_per_month()
         }
-        print(f"Product: {product.name}, Monthly Revenue: {product_monthly_revenue}, Monthly Goal: {product_monthly_goal}, Goal Percentage: {product_goal_percentage}%")
+        # print(f"Product: {product.name}, Monthly Revenue: {product_monthly_revenue}, Monthly Goal: {product_monthly_goal}, Goal Percentage: {product_goal_percentage}%")
         product_goals.append(product_goal)
         total_goal += product_monthly_goal if product_monthly_goal else 0
         mothly_goal_percentage = max(min((product_monthly_revenue / total_goal) if total_goal else 0,1),0)*100
@@ -59,6 +59,27 @@ def index():
     months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
     months = months[this_month:] + months[:this_month]
 
+
+    revenue_per_product = Order.get_revenue_per_product()
+    total_revenue = 0
+    product_labels = []
+
+    for product in revenue_per_product:
+        total_revenue += product[1]
+        product_labels.append(product[0])
+    
+    revenue_per_product_pct = []
+    for product in revenue_per_product:
+        revenue_per_product_pct.append(round((product[1] / total_revenue) * 100, 2))
+
+    revenue_per_product_data = {
+        'labels': product_labels,
+        'total_revenue': total_revenue,
+        'revenue_per_product_pct': revenue_per_product_pct,
+        }
+    
+    print(f"Revenue per product data: {revenue_per_product_data}")
+    
     context = {
         'orders_today': orders_today,
         'monthly_earnings': monthly_earnings[-1][2],
@@ -67,7 +88,8 @@ def index():
         'mothly_goal_percentage': mothly_goal_percentage,
         'revenue_this_month': revenue_this_month,
         'monthly_earnings_arr': monthly_earnings_arr,
-        'months': months
+        'months': months,
+        'revenue_per_product_data': revenue_per_product_data,
     }
     return render_template('index.html', **context)
 
