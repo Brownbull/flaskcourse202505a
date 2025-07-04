@@ -12,7 +12,7 @@
   <title>Order Dashboard</title>
 
   <!-- Custom fonts for this template-->
-  <link href="{{ url_for('static', filename='vendor/fontawesome-free/css/all.min.css') }}" href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="{{ url_for('static', filename='vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
   <!-- Custom styles for this template-->
@@ -140,12 +140,12 @@
                   <tbody>
                     {% for order in orders %}
                     <tr>
-                      <td>{{order.id}}</td>
-                      <td>{{order.customer.name}}</td>
-                      <td>{{order.product.name}}</td>
-                      <td>{{order.quantity}}</td>
-                      <td>{{order.quantity * order.product.price}}</td>
-                      <td>{{order.order_date}}</td>
+                      <td>{{ order.id }}</td>
+                      <td>{{ order.customer.name }}</td>
+                      <td>{{ order.product.name }}</td>
+                      <td>{{ order.quantity }}</td>
+                      <td>{{ order.quantity * order.product.price }}</td>
+                      <td>{{ order.date }}</td>
                     </tr>
                     {% endfor %}
                   </tbody>

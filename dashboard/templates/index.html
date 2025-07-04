@@ -121,7 +121,7 @@
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Earnings (Monthly)</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">${{monthly_earnings}}</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800">${{ earnings_this_month }}</div>
                     </div>
                     <div class="col-auto">
                       <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -138,7 +138,7 @@
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Earnings (Annual)</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">${{yearly_earnings}}</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800">${{ yearly_earnings }}</div>
                     </div>
                     <div class="col-auto">
                       <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -157,11 +157,11 @@
                       <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Monthly Revenue Goal</div>
                       <div class="row no-gutters align-items-center">
                         <div class="col-auto">
-                          <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{mothly_goal_percentage}}%</div>
+                          <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ monthly_goal_percentage }}%</div>
                         </div>
                         <div class="col">
                           <div class="progress progress-sm mr-2">
-                            <div class="progress-bar bg-info" role="progressbar" style="width: {{mothly_goal_percentage}}%" aria-valuenow="{{mothly_goal_percentage}}" aria-valuemin="0" aria-valuemax="100"></div>
+                            <div class="progress-bar bg-info" role="progressbar" style="width: {{ monthly_goal_percentage }}%" aria-valuenow="{{ monthly_goal_percentage }}" aria-valuemin="0" aria-valuemax="100"></div>
                           </div>
                         </div>
                       </div>
@@ -180,8 +180,8 @@
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-warning text-uppercase mb-1"> orders today </div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">{{ orders_today}}</div>
+                      <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Orders Today</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800">{{ orders_today }}</div>
                     </div>
                     <div class="col-auto">
                       <i class="fas fa-credit-card fa-2x text-gray-300"></i>
@@ -251,7 +251,7 @@
                   <div class="mt-4 text-center small">
                     {% for product in revenue_per_product_data.labels %}
                     <span class="mr-2">
-                      <i class="fas fa-circle text-primary"></i> {{ product }}
+                        <i class="fas fa-circle text-primary"></i> {{ product }}
                     </span>
                     {% endfor %}
                   </div>
@@ -273,7 +273,7 @@
                 </div>
                 <div class="card-body">
                   {% for product in product_goals %}
-                  <h4 class="small font-weight-bold">{{product.name}}<span class="float-right">{{ product.goal_percentage }}%</span></h4>
+                  <h4 class="small font-weight-bold">{{ product.name }} <span class="float-right">{{ product.goal_percentage }}%</span></h4>
                   <div class="progress mb-4">
                     <div class="progress-bar bg-danger" role="progressbar" style="width: {{ product.goal_percentage }}%" aria-valuenow="{{ product.goal_percentage }}" aria-valuemin="0" aria-valuemax="100"></div>
                   </div>
@@ -367,9 +367,9 @@
   <script src="{{ url_for('static', filename='js/demo/chart-bar-demo.js') }}"></script>
 
   <script>
-    area_chart({{ monthly_earnings_arr|tojson }}, {{ last_12_months |tojson}});
-    pie_chart({{ revenue_per_product_data | tojson }});
-    bar_chart({{ last_6_monthly_orders_arr | tojson }}, {{ last_6_months | tojson }});
+    area_chart({{ monthly_earnings_array|tojson }}, {{ last_12_months|tojson }});
+    pie_chart({{ revenue_per_product_data|tojson }});
+    bar_chart({{ monthly_orders_array|tojson }}, {{ last_6_months|tojson }});
   </script>
 
 </body>
