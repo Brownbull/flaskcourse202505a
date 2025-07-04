@@ -8,6 +8,7 @@ auth = Blueprint('auth', __name__)
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
+    error = ""
     if request.method == 'POST':
         email_address = request.form.get('email_address')
         password = request.form.get('password')
@@ -16,15 +17,19 @@ def login():
         user = User.query.filter_by(email_address=email_address).first()
 
         if not user or not user.verify_password(password):
-            return redirect(url_for('auth.login'))
+            error = "Invalid email address or password. Please try again."
         
-        login_user(user, remember = remember_me)
-        return redirect(url_for('main.index'))
+        if error:
+            return render_template('login.html', error=error)
+        else:
+            login_user(user, remember = remember_me)
+            return redirect(url_for('main.index'))
 
-    return render_template('login.html')
+    return render_template('login.html', error=error)
 
 @auth.route('/register', methods=['GET', 'POST'])
 def register():
+    error = ""
     if request.method == 'POST':
         first_name = request.form.get('first_name')
         last_name = request.form.get('last_name')
@@ -32,18 +37,30 @@ def register():
         password1 = request.form.get('password')
         password2 = request.form.get('password2')
 
-        user = User(
-            name=first_name + ' ' + last_name,
-            email_address=email_address,
-            password=password1
-        )
+        user = User.query.filter_by(email_address=email_address).first()
+        password_match = password1 == password2
 
-        db.session.add(user)
-        db.session.commit()
+        if user:
+            error = "Email address already exists. Please use a different email."
+        elif not password_match:
+            error = "Passwords do not match. Please try again."
 
-        return redirect(url_for('auth.login'))
+        if error:
+            return render_template('register.html', error=error)
+        
+        else:
+            user = User(
+                name=first_name + ' ' + last_name,
+                email_address=email_address,
+                password=password1
+            )
 
-    return render_template('register.html')
+            db.session.add(user)
+            db.session.commit()
+
+            return redirect(url_for('auth.login'))
+
+    return render_template('register.html', error=error)
 
 @auth.route('/logout')
 def logout():

@@ -144,8 +144,8 @@
                       <td>{{ order.customer.name }}</td>
                       <td>{{ order.product.name }}</td>
                       <td>{{ order.quantity }}</td>
-                      <td>{{ order.quantity * order.product.price }}</td>
-                      <td>{{ order.date }}</td>
+                      <td>{{ "$%.2f"|format(order.quantity * order.product.price) }}</td>
+                      <td>{{ order.order_date.strftime('%Y-%m-%d') }}</td>
                     </tr>
                     {% endfor %}
                   </tbody>

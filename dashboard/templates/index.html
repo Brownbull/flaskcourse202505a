@@ -121,7 +121,7 @@
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Earnings (Monthly)</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">${{ monthly_earnings }}</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800">{{ "$%.2f"|format(monthly_earnings) }}</div>
                     </div>
                     <div class="col-auto">
                       <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -138,7 +138,7 @@
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Earnings (Annual)</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">${{ yearly_earnings }}</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800">{{ "$%.2f"|format(yearly_earnings) }}</div>
                     </div>
                     <div class="col-auto">
                       <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -157,7 +157,7 @@
                       <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Monthly Revenue Goal</div>
                       <div class="row no-gutters align-items-center">
                         <div class="col-auto">
-                          <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ mothly_goal_percentage }}%</div>
+                          <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ mothly_goal_percentage|round }}%</div>
                         </div>
                         <div class="col">
                           <div class="progress progress-sm mr-2">
@@ -248,13 +248,6 @@
                   <div class="chart-pie pt-4 pb-2">
                     <canvas id="myPieChart"></canvas>
                   </div>
-                  <div class="mt-4 text-center small">
-                    {% for product in revenue_per_product_data.labels %}
-                    <span class="mr-2">
-                        <i class="fas fa-circle text-primary"></i> {{ product }}
-                    </span>
-                    {% endfor %}
-                  </div>
                 </div>
               </div>
             </div>
@@ -273,7 +266,7 @@
                 </div>
                 <div class="card-body">
                   {% for product in product_goals %}
-                  <h4 class="small font-weight-bold">{{ product.name }} <span class="float-right">{{ product.goal_percentage }}%</span></h4>
+                  <h4 class="small font-weight-bold">{{ product.name }} <span class="float-right">{{ product.goal_percentage|round }}%</span></h4>
                   <div class="progress mb-4">
                     <div class="progress-bar bg-danger" role="progressbar" style="width: {{ product.goal_percentage }}%" aria-valuenow="{{ product.goal_percentage }}" aria-valuemin="0" aria-valuemax="100"></div>
                   </div>
