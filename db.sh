@@ -10,3 +10,5 @@ $ flask db upgrade
 # 03 create class Order
 $ flask db migrate
 $ flask db upgrade
+# 04 downdgrade
+$ flask db downgrade
