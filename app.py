@@ -1,25 +1,22 @@
 from flask import Flask, render_template
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
 
-db = SQLAlchemy()
-migrate = Migrate()
+app = Flask(__name__)
 
-class Member(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(50))
+@app.route('/')
+def index():
+    return render_template('index.html')
 
-class Order(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    total = db.Column(db.Integer)
+@app.route('/profile')
+def profile():
+    return render_template('profile.html')
 
+@app.route('/timeline')
+def timeline():
+    return render_template('timeline.html')
 
-def create_app():
-    app = Flask(__name__)
+@app.route('/register')
+def register():
+    return render_template('register.html')
 
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite3'
-    db.init_app(app)
-    migrate.init_app(app, db)
-
-    return app
-    
+if __name__ == '__main__':
+    app.run(debug=True)
