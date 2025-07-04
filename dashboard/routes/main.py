@@ -84,7 +84,7 @@ def index():
         'total_revenue': total_revenue,
         'revenue_per_product_pct': revenue_per_product_pct,
         }
-        
+    
     context = {
         'orders_today': orders_today,
         'monthly_earnings': monthly_earnings[-1][2],
@@ -92,11 +92,11 @@ def index():
         'product_goals': product_goals,
         'mothly_goal_percentage': mothly_goal_percentage,
         'revenue_this_month': revenue_this_month,
-        'monthly_earnings_arr': monthly_earnings_arr,
+        'monthly_earnings_array': monthly_earnings_arr,
         'last_12_months': last_12_months,
         'last_6_months': last_6_months,
         'revenue_per_product_data': revenue_per_product_data,
-        'last_6_monthly_orders_arr': last_6_monthly_orders_arr,
+        'monthly_orders_array': last_6_monthly_orders_arr,
     }
     return render_template('index.html', **context)
 

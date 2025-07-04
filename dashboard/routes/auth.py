@@ -6,8 +6,21 @@ from dashboard.models import User
 
 auth = Blueprint('auth', __name__)
 
-@auth.route('/login')
+@auth.route('/login', methods=['GET', 'POST'])
 def login():
+    if request.method == 'POST':
+        email_address = request.form.get('email_address')
+        password = request.form.get('password')
+        remember_me = request.form.get('remember_me')
+
+        user = User.query.filter_by(email_address=email_address).first()
+
+        if not user or password != user.password_hash:
+            return redirect(url_for('auth.login'))
+        
+        login_user(user)
+        return redirect(url_for('main.index'))
+
     return render_template('login.html')
 
 @auth.route('/register', methods=['GET', 'POST'])
