@@ -11,14 +11,14 @@ def login():
     if request.method == 'POST':
         email_address = request.form.get('email_address')
         password = request.form.get('password')
-        remember_me = request.form.get('remember_me')
+        remember_me = True if request.form.get('remember_me') == 'on' else False
 
         user = User.query.filter_by(email_address=email_address).first()
 
         if not user or not user.verify_password(password):
             return redirect(url_for('auth.login'))
         
-        login_user(user)
+        login_user(user, remember = remember_me)
         return redirect(url_for('main.index'))
 
     return render_template('login.html')
