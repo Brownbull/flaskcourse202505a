@@ -15,7 +15,7 @@ def login():
 
         user = User.query.filter_by(email_address=email_address).first()
 
-        if not user or password != user.password_hash:
+        if not user or not user.verify_password(password):
             return redirect(url_for('auth.login'))
         
         login_user(user)
@@ -35,7 +35,7 @@ def register():
         user = User(
             name=first_name + ' ' + last_name,
             email_address=email_address,
-            password_hash=password1
+            password=password1
         )
 
         db.session.add(user)
