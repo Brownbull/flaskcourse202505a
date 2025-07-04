@@ -3,7 +3,10 @@
 $ sqlite3 db.sqlite3
 $ .tables
 $ .exit
-# 02
+# 02 create class Member
 $ flask db init
+$ flask db migrate
+$ flask db upgrade
+# 03 create class Order
 $ flask db migrate
 $ flask db upgrade
