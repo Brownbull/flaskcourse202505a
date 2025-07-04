@@ -1,6 +1,6 @@
 from datetime import datetime
 from flask import Blueprint, render_template
-from flask_login import login_required
+from flask_login import login_required, current_user
 
 from dashboard.models import Order, Product
 
@@ -97,6 +97,7 @@ def index():
         'last_6_months': last_6_months,
         'revenue_per_product_data': revenue_per_product_data,
         'monthly_orders_array': last_6_monthly_orders_arr,
+        'current_user': current_user
     }
     return render_template('index.html', **context)
 
