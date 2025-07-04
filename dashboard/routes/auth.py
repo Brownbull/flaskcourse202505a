@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for
-from flask_login import login_user
+from flask_login import login_user, logout_user
 
 from dashboard.extensions import db
 from dashboard.models import User
@@ -44,3 +44,8 @@ def register():
         return redirect(url_for('auth.login'))
 
     return render_template('register.html')
+
+@auth.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('auth.login'))
