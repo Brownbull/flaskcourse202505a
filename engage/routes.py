@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template
 
 from .extensions import db
+from .wtf import RegisterForm
 
 main = Blueprint('main', __name__)
 
@@ -18,4 +19,5 @@ def timeline():
 
 @main.route('/register')
 def register():
-    return render_template('register.html')
+    form = RegisterForm()
+    return render_template('register.html', form=form)
