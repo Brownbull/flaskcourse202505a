@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, url_for, redirect
 
 from .extensions import db
-from .wtf import RegisterForm
+from .wtf import RegisterForm, LoginForm
 from .models import User
 
 from werkzeug.utils import secure_filename
@@ -11,9 +11,20 @@ from flask import current_app
 UPLOAD_FOLDER = 'static/uploads'  # or your preferred path
 
 main = Blueprint('main', __name__)
-@main.route('/')
+@main.route('/', methods=['GET', 'POST'])
 def index():
-    return render_template('index.html')
+    form = LoginForm()
+    if form.validate_on_submit():
+        return '<h1> Username: {}, Password: {}, Remember Me: {}</h1>'.format(
+            form.username.data,
+            form.password.data,
+            form.remember_me.data
+        )
+        # user = User.query.filter_by(username=form.username.data).first()
+        # if user and check_password_hash(user.password, form.password.data):
+        #     # User authenticated successfully
+        #     return redirect(url_for('main.profile'))
+    return render_template('index.html', form=form)
 
 @main.route('/profile')
 def profile():
