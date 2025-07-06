@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, url_for, redirect
+from flask import Blueprint, render_template, url_for, redirect, request
 from flask_login import login_user, current_user
 
 from .extensions import db
@@ -15,20 +15,15 @@ main = Blueprint('main', __name__)
 @main.route('/')
 def index():
     form = LoginForm()
-    if form.validate_on_submit():
-        return '<h1> Username: {}, Password: {}, Remember Me: {}</h1>'.format(
-            form.username.data,
-            form.password.data,
-            form.remember_me.data
-        )
-        # user = User.query.filter_by(username=form.username.data).first()
-        # if user and check_password_hash(user.password, form.password.data):
-        #     # User authenticated successfully
-        #     return redirect(url_for('main.profile'))
+
     return render_template('index.html', form=form)
 
-@main.route('/login', methods=['POST'])
+@main.route('/login', methods=['GET','POST'])
 def login():
+    if request.method == 'GET':
+        return redirect(url_for('main.index'))
+    
+    error = None
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
@@ -37,7 +32,7 @@ def login():
             # User authenticated successfully
             return redirect(url_for('main.profile'))
         else:
-            return '<h1>Invalid username or password</h1>'
+            return render_template('index.html', form=form, error='Invalid username or password')
     return render_template('index.html', form=form)
 
 @main.route('/profile')

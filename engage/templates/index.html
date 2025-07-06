@@ -64,12 +64,27 @@
 										</h3>
 									</div>
 									<form action="{{ url_for('main.login') }}" method="POST">
+										{% if error %}
+											<div class="alert alert-danger">
+												{{ error }}
+											</div>
+										{% endif %}
 										{{ form.csrf_token }}
 										<div class="form-group">
 											{{ form.username(class="form-control", placeholder="Username") }}
+											<ul>
+												{% for error in form.username.errors %}
+													<li class="text-danger">{{ error }}</li>
+												{% endfor %}
+											</ul>
 										</div>
 										<div class="form-group">
 											{{ form.password(class="form-control", placeholder="Password") }}
+											<ul>
+												{% for error in form.password.errors %}
+													<li class="text-danger">{{ error }}</li>
+												{% endfor %}
+											</ul>
 										</div>
 										<div class="form-group">
 											<div class="checkbox-inline">
