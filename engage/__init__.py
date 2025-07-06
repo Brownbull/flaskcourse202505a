@@ -4,6 +4,7 @@ from .commands import create_tables
 from .extensions import db, migrate
 from .routes import main
 
+
 def create_app():
   app = Flask(__name__)
 
