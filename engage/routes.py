@@ -3,8 +3,8 @@ from flask_login import login_user, current_user, login_required, logout_user
 from datetime import datetime
 
 from .extensions import db
-from .wtf import RegisterForm, LoginForm
-from .models import User
+from .wtf import RegisterForm, LoginForm, PostForm
+from .models import User, Post
 
 from werkzeug.utils import secure_filename
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -70,7 +70,21 @@ def profile():
 
 @main.route('/timeline')
 def timeline():
-    return render_template('timeline.html')
+    form = PostForm()
+    return render_template('timeline.html', form=form, current_user=current_user)
+
+@main.route('/new_post', methods=['POST'])
+@login_required
+def new_post():
+    form = PostForm()
+    if form.validate():
+        content = form.content.data
+        if content:
+            new_post = Post(user_id=current_user.id, content=content, date_created=datetime.now())
+            db.session.add(new_post)
+            db.session.commit()
+            return redirect(url_for('main.timeline'))
+    return render_template('timeline.html', form=form, current_user=current_user, error='Post content is required')
 
 @main.route('/logout')
 @login_required
