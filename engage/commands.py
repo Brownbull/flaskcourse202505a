@@ -4,7 +4,7 @@ from faker import Faker
 from flask.cli import with_appcontext
 
 from .extensions import db
-from .models import user
+from .models import User
 
 fake = Faker()
 
