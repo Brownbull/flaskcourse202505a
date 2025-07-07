@@ -74,7 +74,11 @@ def profile(username):
     else:
         user = current_user
 
-    return render_template('profile.html', current_user=user)
+    activity_posts_qty = 5
+
+    posts = Post.query.filter_by(user=user).order_by(Post.date_created.desc()).all()[:activity_posts_qty]
+
+    return render_template('profile.html', current_user=user, posts=posts)
 
 @main.route('/timeline', defaults = {'username': None})
 @main.route('/timeline/<username>')
