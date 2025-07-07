@@ -92,21 +92,26 @@ def profile(username):
     who_to_watch_limit = 4
     who_to_watch_count = 0
 
-    for user in User.query.order_by(db.func.random()).all():
-        if user != current_user:
-            who_to_watch.append(user)
+    for user_to_watch in User.query.order_by(db.func.random()).all():
+        if user_to_watch != current_user:
+            who_to_watch.append(user_to_watch)
             who_to_watch_count += 1
             if who_to_watch_count == who_to_watch_limit:
                 break
 
     who_to_watch = who_to_watch[:who_to_watch_limit]
-
-    return render_template('profile.html', current_user=user, posts=posts, followed_by=followed_by, display_follow=display_follow, who_to_watch=who_to_watch)
+    return render_template('profile.html', 
+        current_user=user, 
+        posts=posts, 
+        followed_by=followed_by, 
+        display_follow=display_follow, 
+        who_to_watch=who_to_watch)
 
 @main.route('/timeline', defaults = {'username': None})
 @main.route('/timeline/<username>')
 @login_required
 def timeline(username):
+    
     form = PostForm()
     current_time = datetime.now()
 
@@ -130,9 +135,9 @@ def timeline(username):
     who_to_watch_limit = 4
     who_to_watch_count = 0
 
-    for user in User.query.order_by(db.func.random()).all():
-        if user != current_user:
-            who_to_watch.append(user)
+    for user_to_watch in User.query.order_by(db.func.random()).all():
+        if user_to_watch != current_user:
+            who_to_watch.append(user_to_watch)
             who_to_watch_count += 1
             if who_to_watch_count == who_to_watch_limit:
                 break
