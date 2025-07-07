@@ -3,13 +3,13 @@ from flask_login import login_user, current_user, login_required, logout_user
 from datetime import datetime
 
 from .extensions import db
-from .wtf import RegisterForm, LoginForm, PostForm
+from .forms import RegisterForm, LoginForm, PostForm
 from .models import User, Post
 
 from werkzeug.utils import secure_filename
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
-UPLOAD_FOLDER = 'static/uploads'  # or your preferred path
+UPLOAD_FOLDER = 'static/uploads'
 
 main = Blueprint('main', __name__)
 @main.route('/')
@@ -75,8 +75,9 @@ def timeline():
     user_id = current_user.id
     user_posts = Post.query.filter_by(user_id=user_id).order_by(Post.date_created.desc()).all()
     current_time = datetime.now()
-    
-    return render_template('timeline.html', form=form, current_user=current_user, user_posts=user_posts, current_time=current_time)
+    user_posts_count = len(user_posts)
+
+    return render_template('timeline.html', form=form, current_user=current_user, user_posts=user_posts, current_time=current_time, user_posts_count=user_posts_count)
 
 @main.route('/new_post', methods=['POST'])
 @login_required
