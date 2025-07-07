@@ -144,13 +144,16 @@ def timeline(username):
 
     who_to_watch = who_to_watch[:who_to_watch_limit]
 
+    followed_by = user.followed_by.all()
+
     return render_template('timeline.html', 
         form=form, 
         current_user=user, 
         user_posts=user_posts, 
         user_following_posts = user_following_posts,
         current_time=current_time,
-        who_to_watch=who_to_watch)
+        who_to_watch=who_to_watch,
+        followed_by=followed_by)
 
 @main.route('/new_post', methods=['POST'])
 @login_required
