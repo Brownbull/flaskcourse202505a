@@ -75,10 +75,13 @@ def profile(username):
         user = current_user
 
     activity_posts_qty = 5
-
     posts = Post.query.filter_by(user=user).order_by(Post.date_created.desc()).all()[:activity_posts_qty]
 
-    return render_template('profile.html', current_user=user, posts=posts)
+    followed_by = user.followed_by.all()
+    print(followed_by)
+
+
+    return render_template('profile.html', current_user=user, posts=posts, followed_by=followed_by)
 
 @main.route('/timeline', defaults = {'username': None})
 @main.route('/timeline/<username>')
