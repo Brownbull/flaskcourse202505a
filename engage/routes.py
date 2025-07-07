@@ -4,7 +4,7 @@ from datetime import datetime
 
 from .extensions import db
 from .forms import RegisterForm, LoginForm, PostForm
-from .models import User, Post
+from .models import User, Post, followers
 
 from werkzeug.utils import secure_filename
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -39,6 +39,7 @@ def register():
                 image=image_url,
                 join_date=datetime.now()  # Store the current date and time
             )
+            login_user(new_user, remember=False)
             db.session.add(new_user)
             db.session.commit()
 
@@ -79,14 +80,13 @@ def profile(username):
 
     followed_by = user.followed_by.all()
 
-    display_follow = 0
+    display_follow = ""
     if current_user == user:
         display_follow = "self"
+    elif current_user in followed_by:
+        display_follow = "following"
     else:
-        if current_user in followed_by:
-            display_follow = "following"
-        else:
-            display_follow = "not following"
+        display_follow = "not following"
 
     return render_template('profile.html', current_user=user, posts=posts, followed_by=followed_by, display_follow=display_follow)
 
@@ -95,6 +95,7 @@ def profile(username):
 @login_required
 def timeline(username):
     form = PostForm()
+    current_time = datetime.now()
 
     if username:
         user = User.query.filter_by(username=username).first()
@@ -104,10 +105,20 @@ def timeline(username):
         user = current_user
 
     user_posts = Post.query.filter_by(user_id=user.id).order_by(Post.date_created.desc()).all()
-    current_time = datetime.now()
-    user_posts_count = len(user_posts)
+    user_following_posts = Post.query.join(
+            followers, (followers.c.followed_id == Post.user_id)
+        ).filter(
+            followers.c.follower_id == current_user.id
+        ).order_by(
+            Post.date_created.desc()
+        ).all()
 
-    return render_template('timeline.html', form=form, current_user=user, user_posts=user_posts, current_time=current_time, user_posts_count=user_posts_count)
+    return render_template('timeline.html', 
+        form=form, 
+        current_user=user, 
+        user_posts=user_posts, 
+        user_following_posts = user_following_posts,
+        current_time=current_time)
 
 @main.route('/new_post', methods=['POST'])
 @login_required
