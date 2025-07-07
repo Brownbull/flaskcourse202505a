@@ -78,10 +78,17 @@ def profile(username):
     posts = Post.query.filter_by(user=user).order_by(Post.date_created.desc()).all()[:activity_posts_qty]
 
     followed_by = user.followed_by.all()
-    print(followed_by)
 
+    display_follow = 0
+    if current_user == user:
+        display_follow = "self"
+    else:
+        if current_user in followed_by:
+            display_follow = "following"
+        else:
+            display_follow = "not following"
 
-    return render_template('profile.html', current_user=user, posts=posts, followed_by=followed_by)
+    return render_template('profile.html', current_user=user, posts=posts, followed_by=followed_by, display_follow=display_follow)
 
 @main.route('/timeline', defaults = {'username': None})
 @main.route('/timeline/<username>')
@@ -128,5 +135,14 @@ def follow(username):
     user_to_follow = User.query.filter_by(username=username).first()
     if user_to_follow:
         current_user.following.append(user_to_follow)
+        db.session.commit()
+    return redirect(url_for('main.profile', username=username))
+
+@main.route('/unfollow/<username>')
+@login_required
+def unfollow(username):
+    user_to_unfollow = User.query.filter_by(username=username).first()
+    if user_to_unfollow:
+        current_user.following.remove(user_to_unfollow)
         db.session.commit()
     return redirect(url_for('main.profile', username=username))
