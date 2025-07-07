@@ -118,3 +118,12 @@ def new_post():
 def logout():
     logout_user()
     return redirect(url_for('main.index'))
+
+@main.route('/follow/<username>')
+@login_required
+def follow(username):
+    user_to_follow = User.query.filter_by(username=username).first()
+    if user_to_follow:
+        current_user.following.append(user_to_follow)
+        db.session.commit()
+    return redirect(url_for('main.profile', username=username))
