@@ -64,42 +64,62 @@ def login():
             return render_template('index.html', form=form, error='Invalid username or password')
     return render_template('index.html', form=form)
 
+def get_user(username=None):
+    """Get a user object by username or return the current user if None is passed."""
+    if username:
+        user = User.query.filter_by(username=username).first_or_404()
+    else:
+        user = current_user
+
+    return user
+
+def get_users_to_watch(current_user):
+    """Get a list of users to watch (not including the current user)."""
+    users_to_watch = []
+    users_to_watch_limit = 4
+
+    for user in User.query.order_by(db.func.random()).all():
+        if user != current_user:
+            users_to_watch.append(user)
+            if len(users_to_watch) == users_to_watch_limit:
+                break
+
+    return users_to_watch
+
+def get_user_posts(user):
+    return Post.query.filter_by(user=user).order_by(Post.date_created.desc()).all()
+
+def get_user_following_posts(user):
+    return Post.query.join(
+            followers, (followers.c.followed_id == Post.user_id)
+        ).filter(
+            followers.c.follower_id == user.id
+        ).order_by(
+            Post.date_created.desc()
+        ).all()
+def get_followed_by(user):
+    return user.followed_by.all()
+
+def set_display_follow(user, followed_by):
+    if current_user == user:
+        return "self"
+    elif current_user in followed_by:
+        return "following"
+    else:
+        return "not following"
+
 @main.route('/profile', defaults = {'username': None})
 @main.route('/profile/<username>')
 def profile(username):
     
-    if username:
-        user = User.query.filter_by(username=username).first()
-        if not user:
-            abort(404)
-    else:
-        user = current_user
-
+    user = get_user(username)
     activity_posts_qty = 5
-    posts = Post.query.filter_by(user=user).order_by(Post.date_created.desc()).all()[:activity_posts_qty]
 
-    followed_by = user.followed_by.all()
+    posts = get_user_posts(user)[:activity_posts_qty]
+    followed_by = get_followed_by(user)
+    display_follow = set_display_follow(user, followed_by)
+    who_to_watch = get_users_to_watch(user)
 
-    display_follow = ""
-    if current_user == user:
-        display_follow = "self"
-    elif current_user in followed_by:
-        display_follow = "following"
-    else:
-        display_follow = "not following"
-
-    who_to_watch = []
-    who_to_watch_limit = 4
-    who_to_watch_count = 0
-
-    for user_to_watch in User.query.order_by(db.func.random()).all():
-        if user_to_watch != current_user:
-            who_to_watch.append(user_to_watch)
-            who_to_watch_count += 1
-            if who_to_watch_count == who_to_watch_limit:
-                break
-
-    who_to_watch = who_to_watch[:who_to_watch_limit]
     return render_template('profile.html', 
         current_user=user, 
         posts=posts, 
@@ -115,36 +135,12 @@ def timeline(username):
     form = PostForm()
     current_time = datetime.now()
 
-    if username:
-        user = User.query.filter_by(username=username).first()
-        if not user:
-            abort(404)
-    else:
-        user = current_user
+    user = get_user(username)
 
-    user_posts = Post.query.filter_by(user_id=user.id).order_by(Post.date_created.desc()).all()
-    user_following_posts = Post.query.join(
-            followers, (followers.c.followed_id == Post.user_id)
-        ).filter(
-            followers.c.follower_id == user.id
-        ).order_by(
-            Post.date_created.desc()
-        ).all()
-    
-    who_to_watch = []
-    who_to_watch_limit = 4
-    who_to_watch_count = 0
-
-    for user_to_watch in User.query.order_by(db.func.random()).all():
-        if user_to_watch != current_user:
-            who_to_watch.append(user_to_watch)
-            who_to_watch_count += 1
-            if who_to_watch_count == who_to_watch_limit:
-                break
-
-    who_to_watch = who_to_watch[:who_to_watch_limit]
-
-    followed_by = user.followed_by.all()
+    user_posts = get_user_posts(user)
+    followed_by = get_followed_by(user)
+    user_following_posts = get_user_following_posts(user)
+    who_to_watch = get_users_to_watch(user)
 
     return render_template('timeline.html', 
         form=form, 
