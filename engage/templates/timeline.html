@@ -100,7 +100,7 @@
 														<small><em>@{{ post.user.username }}</em></small>
 													</div>
 													<div class="col-lg-2 text-right">
-														15m
+														{{ post.date_created|time_since }}
 													</div>
 												</div>
 												<div class="row pad">

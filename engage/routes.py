@@ -69,12 +69,14 @@ def profile():
     return render_template('profile.html', current_user=current_user)
 
 @main.route('/timeline')
+@login_required
 def timeline():
     form = PostForm()
     user_id = current_user.id
     user_posts = Post.query.filter_by(user_id=user_id).order_by(Post.date_created.desc()).all()
+    current_time = datetime.now()
     
-    return render_template('timeline.html', form=form, current_user=current_user, user_posts=user_posts)
+    return render_template('timeline.html', form=form, current_user=current_user, user_posts=user_posts, current_time=current_time)
 
 @main.route('/new_post', methods=['POST'])
 @login_required
