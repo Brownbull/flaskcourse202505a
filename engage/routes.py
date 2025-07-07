@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, url_for, redirect, request, current_app
+from flask import Blueprint, render_template, url_for, redirect, request, current_app, abort
 from flask_login import login_user, current_user, login_required, logout_user
 from datetime import datetime
 
@@ -68,16 +68,24 @@ def login():
 def profile():
     return render_template('profile.html', current_user=current_user)
 
-@main.route('/timeline')
+@main.route('/timeline', defaults = {'username': None})
+@main.route('/timeline/<username>')
 @login_required
-def timeline():
+def timeline(username):
     form = PostForm()
-    user_id = current_user.id
-    user_posts = Post.query.filter_by(user_id=user_id).order_by(Post.date_created.desc()).all()
+
+    if username:
+        user = User.query.filter_by(username=username).first()
+        if not user:
+            abort(404)
+    else:
+        user = current_user
+
+    user_posts = Post.query.filter_by(user_id=user.id).order_by(Post.date_created.desc()).all()
     current_time = datetime.now()
     user_posts_count = len(user_posts)
 
-    return render_template('timeline.html', form=form, current_user=current_user, user_posts=user_posts, current_time=current_time, user_posts_count=user_posts_count)
+    return render_template('timeline.html', form=form, current_user=user, user_posts=user_posts, current_time=current_time, user_posts_count=user_posts_count)
 
 @main.route('/new_post', methods=['POST'])
 @login_required
