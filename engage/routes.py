@@ -101,8 +101,6 @@ def profile(username):
 
     who_to_watch = who_to_watch[:who_to_watch_limit]
 
-    print(who_to_watch)
-
     return render_template('profile.html', current_user=user, posts=posts, followed_by=followed_by, display_follow=display_follow, who_to_watch=who_to_watch)
 
 @main.route('/timeline', defaults = {'username': None})
@@ -127,13 +125,27 @@ def timeline(username):
         ).order_by(
             Post.date_created.desc()
         ).all()
+    
+    who_to_watch = []
+    who_to_watch_limit = 4
+    who_to_watch_count = 0
+
+    for user in User.query.order_by(db.func.random()).all():
+        if user != current_user:
+            who_to_watch.append(user)
+            who_to_watch_count += 1
+            if who_to_watch_count == who_to_watch_limit:
+                break
+
+    who_to_watch = who_to_watch[:who_to_watch_limit]
 
     return render_template('timeline.html', 
         form=form, 
         current_user=user, 
         user_posts=user_posts, 
         user_following_posts = user_following_posts,
-        current_time=current_time)
+        current_time=current_time,
+        who_to_watch=who_to_watch)
 
 @main.route('/new_post', methods=['POST'])
 @login_required
