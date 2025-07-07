@@ -63,10 +63,18 @@ def login():
             return render_template('index.html', form=form, error='Invalid username or password')
     return render_template('index.html', form=form)
 
-@main.route('/profile')
-@login_required
-def profile():
-    return render_template('profile.html', current_user=current_user)
+@main.route('/profile', defaults = {'username': None})
+@main.route('/profile/<username>')
+def profile(username):
+    
+    if username:
+        user = User.query.filter_by(username=username).first()
+        if not user:
+            abort(404)
+    else:
+        user = current_user
+
+    return render_template('profile.html', current_user=user)
 
 @main.route('/timeline', defaults = {'username': None})
 @main.route('/timeline/<username>')
