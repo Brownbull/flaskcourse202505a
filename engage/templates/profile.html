@@ -119,7 +119,7 @@
 														<div class="col-lg-10">
 															<div>
 																<strong class="mid">{{ post.user.name }}</strong> 
-																<small><em>@{{ post.user.username }}</em></small> . 
+																<small><em><a href="{{ url_for('main.profile', username=post.user.username) }}">@{{ post.user.username }}</a></em></small> . 
 																{{ post.date_created|time_since }}
 															</div>
 															<div class="pad">
@@ -142,7 +142,7 @@
 														<div class="col-lg-10">
 															<div>
 																<strong class="mid">{{ follower.name }}</strong> 
-																<small><em>@{{ follower.username }}</em></small>
+																<small><em><a href="{{ url_for('main.profile', username=follower.username) }}">@{{ follower.username }}</a></em></small>
 															</div>
 															<div class="row pad">
 																<hr />

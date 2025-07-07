@@ -108,7 +108,7 @@ def timeline(username):
     user_following_posts = Post.query.join(
             followers, (followers.c.followed_id == Post.user_id)
         ).filter(
-            followers.c.follower_id == current_user.id
+            followers.c.follower_id == user.id
         ).order_by(
             Post.date_created.desc()
         ).all()
