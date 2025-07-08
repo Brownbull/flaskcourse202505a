@@ -1,10 +1,13 @@
 import {Component} from 'react'
 import {Table, Card, Button} from 'react-bootstrap'
 
+import NavBar from './../navigation/Navigation'
+
 class Overview extends Component {
     render() {
         return (
             <>
+                <NavBar/>
                 <Card>
                     <Card.Body>
                         <AccountInformation/>
