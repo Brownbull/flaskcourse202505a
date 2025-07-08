@@ -1,5 +1,4 @@
 from flask import Flask
-from flask_login import LoginManager
 
 from .commands import create_tables
 from .extensions import db, migrate, login_manager
