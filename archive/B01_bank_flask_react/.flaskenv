@@ -1,4 +1,4 @@
-FLASK_APP = jennyapp
+FLASK_APP = bank_be
 FLASK_DEBUG = True # DEV
 # FLASK_DEBUG=False # PROD
 FLASK_RUN_PORT = 5001

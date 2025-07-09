@@ -11,7 +11,12 @@ class Overview extends Component {
                 <Card>
                     <Card.Body>
                         <AccountInformation/>
-                        <Button variant='primary'>Transfer</Button>
+                        <Button 
+                        variant = 'primary'
+                        onClick = {() => {this.props.onRouteChange('transfer')}}
+                        >
+                            Transfer
+                        </Button>
                         <TransactionTable/>
                     </Card.Body>
                 </Card>

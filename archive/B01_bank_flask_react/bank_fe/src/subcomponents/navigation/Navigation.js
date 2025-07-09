@@ -7,8 +7,12 @@ class NavBar extends Component {
     render() {
         return (
             <>
-                <Navbar bg="light" expand="lg" fixed='top'>
-                    <Button>Overview</Button>
+                <Navbar bg="light" expand="lg" fixed='top' >
+                    <Button
+                    onClick = {() => { this.props.onRouteChange('overview') }}
+                    >
+                        Overview
+                    </Button>
                 </Navbar>
             </>
         )

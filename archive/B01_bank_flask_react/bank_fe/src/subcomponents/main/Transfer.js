@@ -7,7 +7,9 @@ class TransferPage extends Component {
     render() {
         return (
             <>
-                <NavBar/>
+                <NavBar
+                onRouteChange = {this.props.onRouteChange}
+                />
                 <Card>
                     <Card.Body>
                         <TransferForm/>
