@@ -10,8 +10,7 @@
                 <h2 class="mt-8 text-2xl/9 font-bold tracking-tight text-gray-900">Sign in to your account</h2>
                 <p class="mt-2 text-sm/6 text-gray-500">
                     Not a member?
-                    <a href="#" class="font-semibold text-indigo-600 hover:text-indigo-500">Start a 14 day free
-                        trial</a>
+                    <a href="{{ url_for('main.register')}}" class="font-semibold text-indigo-600 hover:text-indigo-500">Join here!</a>
                 </p>
             </div>
 
@@ -65,9 +64,15 @@
                                 in</button>
                         </div>
                     </form>
+                    <div>
+                        <p class="mt-2 text-sm/6 text-gray-500">
+                            More info?
+                            <a href="{{ url_for('main.index')}}" class="font-semibold text-indigo-600 hover:text-indigo-500">Go back</a>
+                        </p>
+                    </div>
                 </div>
 
-                <div class="mt-10">
+                <!-- <div class="mt-10">
                     <div class="relative">
                         <div class="absolute inset-0 flex items-center" aria-hidden="true">
                             <div class="w-full border-t border-gray-200"></div>
@@ -108,7 +113,7 @@
                             <span class="text-sm/6 font-semibold">GitHub</span>
                         </a>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
