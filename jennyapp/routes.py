@@ -8,7 +8,7 @@ import os
 UPLOAD_FOLDER = 'static/uploads'
 
 from .extensions import db
-from .forms import RegisterForm, LoginForm
+from .forms import RegisterForm, LoginForm, PatientForm
 from .models import User
 
 main = Blueprint('main', __name__)
@@ -47,21 +47,14 @@ def login():
     error = None
     form = LoginForm()
     
-    # if request.method == 'GET':
-    #     return render_template('login.html')
-
-
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         if not user or not user.verify_password(form.password.data):
             error = 'Invalid username or password'
-            # return render_template('login.html', form=form, error='Invalid username or password')
         else:
             login_user(user, remember=form.remember_me.data) 
             return redirect(url_for('main.dashboard'))
 
-    if error:
-        print(f"error: {error}")
     context = {
         'form': form,
         'error': error,
@@ -92,7 +85,47 @@ def activity():
 @main.route('/patients')
 @login_required
 def patients():
-    return render_template('dashboard/patients.html')
+    return render_template('dashboard/patients/pat_index.html')
+
+@main.route('/add_patient', methods=['GET', 'POST'])
+@login_required
+def add_patient():
+    error = None
+    form = PatientForm()
+
+    if form.validate_on_submit():
+        print(f"full_name: {form.full_name.data}")
+        print(f"date_of_birth: {form.date_of_birth.data}")
+        print(f"gender: {form.gender.data}")
+        print(f"email: {form.email.data}")
+        print(f"phone_number: {form.phone_number.data}")
+        print(f"address: {form.address.data}")
+        print(f"adresss2: {form.adresss2.data}")
+        print(f"city: {form.city.data}")
+        print(f"region: {form.region.data}")
+        print(f"zip_code: {form.zip_code.data}")
+        print(f"country: {form.country.data}")
+        print(f"notifications: {form.notifications.data}")
+        
+
+        # patient = User(
+        #     full_name = form.full_name.data,
+        #     date_of_birth = form.date_of_birth.data,
+        #     gender = form.gender.data,
+        #     email = form.email.data,
+        #     phone = form.phone.data,
+        #     address = form.address.data,
+        #     join_date = datetime.now()
+        # )
+        # db.session.add(patient)
+        # db.session.commit()
+        return redirect(url_for('main.patients'))
+    
+    context = {
+        'form': form,
+        'error': error
+    }
+    return render_template('dashboard/patients/pat_add.html', **context)
 
 @main.route('/session')
 @login_required

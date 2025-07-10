@@ -8,66 +8,9 @@
                 email and role.</p>
         </div>
         <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-            <button type="button"
+            <a href="{{ url_for('main.add_patient') }}"
                 class="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                Add user</button>
-        </div>
-    </div>
-    <div class="modal fade" id="login">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Log in to Eng@ge!</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-lg-6 col-lg-offset-3">
-                            <div class="text-center">
-                                <h3>
-                                    <a href="./">ENG@GE!</a>
-                                </h3>
-                            </div>
-                            <form action="{{ url_for('main.login') }}" method="POST">
-                                {% if error %}
-                                <div class="alert alert-danger">
-                                    {{ error }}
-                                </div>
-                                {% endif %}
-                                {{ form.csrf_token }}
-                                <div class="form-group">
-                                    {{ form.username(class="form-control", placeholder="Username") }}
-                                    <ul>
-                                        {% for error in form.username.errors %}
-                                        <li class="text-danger">{{ error }}</li>
-                                        {% endfor %}
-                                    </ul>
-                                </div>
-                                <div class="form-group">
-                                    {{ form.password(class="form-control", placeholder="Password") }}
-                                    <ul>
-                                        {% for error in form.password.errors %}
-                                        <li class="text-danger">{{ error }}</li>
-                                        {% endfor %}
-                                    </ul>
-                                </div>
-                                <div class="form-group">
-                                    <div class="checkbox-inline">
-                                        <label>
-                                            {{ form.remember_me }}
-                                            Remember Me
-                                        </label>
-                                    </div>
-                                </div>
-    
-                                <div class="form-group">
-                                    <button type="submit" class="btn btn-danger btn-block">Login</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                Add patient</a>
         </div>
     </div>
 
