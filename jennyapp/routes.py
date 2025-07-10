@@ -8,15 +8,31 @@ import os
 UPLOAD_FOLDER = 'static/uploads'
 
 from .extensions import db
+from .forms import RegisterForm
+from .models import User
 
 main = Blueprint('main', __name__)
 @main.route('/')
 def index():
     return render_template('index.html')
 
-@main.route('/register')
+@main.route('/register', methods=['GET', 'POST'])
 def register():
-    return render_template('register.html')
+    form = RegisterForm()
+
+    if form.validate_on_submit():
+        register_user = User(
+            email=form.email.data,
+            password=generate_password_hash(form.password.data),
+            join_date=datetime.now()
+        )
+        db.session.add(register_user)
+        db.session.commit()
+        return redirect(url_for('main.login'))
+        
+
+    return render_template('register.html', 
+        form = form)
 
 @main.route('/login')
 def login():
