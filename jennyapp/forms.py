@@ -22,8 +22,7 @@ chile_regions = ["Región de Arica y Parinacota",
     "Región de Aysén del General Carlos Ibáñez del Campo",
     "Región de Magallanes y de la Antártica Chilena"]
 
-world_countries = [
-    "Afganistán",
+world_countries = ["Afganistán",
     "Albania",
     "Alemania",
     "Andorra",
@@ -217,7 +216,7 @@ world_countries = [
     "Yemen",
     "Yibuti",
     "Zambia",
-    "Zimbabue",
+    "Zimbabue"
 ]
 
 class RegisterForm(FlaskForm):
@@ -242,7 +241,7 @@ class PatientForm(FlaskForm):
     city = StringField('City', validators=[Length(max=100)])
     region = SelectField('Region', choices=chile_regions, default=chile_regions[11])
     zip_code = StringField('Zip Code', validators=[Length(max=20)])
-    country = StringField('Country', validators=[Length(max=100)])
+    country = SelectField('Country', choices=world_countries, default=world_countries[37])
     notifications = BooleanField('Receive Notifications', default=False)
     join_date = StringField('Join Date', validators=[DataRequired()])
     # MEDICAL FIELDS
