@@ -18,6 +18,7 @@ class User(UserMixin, db.Model):
     def verify_password(self, password):
         return check_password_hash(self.password_hash, password)
     
+
 class Patient(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     full_name = db.Column(db.String(200), nullable=False)
@@ -34,12 +35,29 @@ class Patient(db.Model):
     zip_code = db.Column(db.String(20), nullable=True)
     notifications = db.Column(db.Boolean, nullable=True)
     join_date = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
-    # ME
+    # MEDICAL
     medical_history = db.Column(db.String(200), nullable=True)
     current_medications = db.Column(db.String(200), nullable=True)
     allergies = db.Column(db.String(200), nullable=True)
     emergency_contact_name = db.Column(db.String(100), nullable=True)
     emergency_contact_number = db.Column(db.String(20), nullable=True)
     emergency_contact_relationship = db.Column(db.String(100), nullable=True)
+
+# Session model for appointments
+class Session(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    patient_id = db.Column(db.Integer, db.ForeignKey('patient.id'), nullable=False)
+    doctor_email = db.Column(db.String(120), nullable=False)
+    patient_full_name = db.Column(db.String(200), nullable=False)
+    session_date = db.Column(db.Date, nullable=False)
+    session_time = db.Column(db.Time, nullable=False)
+    consent = db.Column(db.Boolean, nullable=True)
+    reason_for_visit = db.Column(db.String(200), nullable=False)
+    medications = db.Column(db.String(200), nullable=True)
+    payment_method = db.Column(db.String(50), nullable=True)
+    total_amount = db.Column(db.Integer, nullable=True)
+    payment_status = db.Column(db.String(20), nullable=False, default='unpaid')
+    created_at = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
 
 

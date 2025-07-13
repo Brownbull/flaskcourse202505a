@@ -253,9 +253,10 @@ class PatientForm(FlaskForm):
     emergency_contact_number = StringField('Emergency Contact Number', validators=[Length(max=20)], default='')
     emergency_contact_relationship = StringField('Emergency Contact Relationship', validators=[Length(max=100)], default='')
 
+
 class SessionForm(FlaskForm):
-    doctor_email = EmailField('Email', validators=[InputRequired('Email is required'), Length(max=120), Email(message='Invalid email address.')])
-    patient_full_name = StringField('Full Name', validators=[DataRequired(), Length(max=200)])
+    doctor_email = SelectField('Doctor Email', choices=[])
+    patient_full_name = SelectField('Patient Full Name', choices=[])
     session_date = DateField('Date', format='%Y-%m-%d', default = date.today())
     session_time = TimeField('Time', format='%H:%M', default = datetime.now().time())
     # MEDICAL

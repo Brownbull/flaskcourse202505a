@@ -9,7 +9,7 @@ UPLOAD_FOLDER = 'static/uploads'
 
 from .extensions import db
 from .forms import RegisterForm, LoginForm, PatientForm, SessionForm
-from .models import User, Patient
+from .models import User, Patient, Session
 
 main = Blueprint('main', __name__)
 @main.route('/')
@@ -189,15 +189,69 @@ def delete_patient(patient_id):
 def sessions():
     return render_template('dashboard/sessions/ses_index.html')
 
-@main.route('/edit_session')
+
+# Edit or add a session
+@main.route('/edit_session', methods=['GET', 'POST'])
+@main.route('/edit_session/<int:session_id>', methods=['GET', 'POST'])
 @login_required
-def edit_session():
+def edit_session(session_id=None):
     error = None
+    session_obj = None
     form = SessionForm()
+    form.doctor_email.choices = [(u.email, u.email) for u in User.query.all()]
+    form.patient_full_name.choices = [(p.full_name, p.full_name) for p in Patient.query.all()]
+
+    # If editing, load session
+    if session_id:
+        session_obj = Session.query.get_or_404(session_id, description=f'Session with id {session_id} not found')
+        form = SessionForm(obj=session_obj)
+
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            # If editing, update; else, create new
+            if session_obj:
+                session_obj.doctor_email = form.doctor_email.data
+                session_obj.patient_full_name = form.patient_full_name.data
+                session_obj.session_date = form.session_date.data
+                session_obj.session_time = form.session_time.data
+                session_obj.consent = form.consent.data
+                session_obj.reason_for_visit = form.reason_for_visit.data
+                session_obj.medications = form.medications.data
+                session_obj.payment_method = form.payment_method.data
+                session_obj.total_amount = form.total_amount.data
+                session_obj.payment_status = form.payment_status.data
+            else:
+                # Find patient by name (or create new if not found)
+                patient = Patient.query.filter_by(full_name=form.patient_full_name.data).first()
+                if not patient:
+                    patient = Patient(full_name=form.patient_full_name.data)
+                    db.session.add(patient)
+                    db.session.commit()
+                session_obj = Session(
+                    user_id=User.query.filter_by(email=form.doctor_email.data).first().id,
+                    patient_id=patient.id,
+                    doctor_email=form.doctor_email.data,
+                    patient_full_name=form.patient_full_name.data,
+                    session_date=form.session_date.data,
+                    session_time=form.session_time.data,
+                    consent=form.consent.data,
+                    reason_for_visit=form.reason_for_visit.data,
+                    medications=form.medications.data,
+                    payment_method=form.payment_method.data,
+                    total_amount=form.total_amount.data,
+                    payment_status=form.payment_status.data
+                )
+                db.session.add(session_obj)
+            db.session.commit()
+            return redirect(url_for('main.sessions'))
+        else:
+            error = 'Form validation failed. Please check your input.'
 
     context = {
         'error': error,
-        'form': form
+        'form': form,
+        'session_id': session_id,
+        'session_obj': session_obj
     }
     return render_template('dashboard/sessions/ses_edit.html', **context)
 
