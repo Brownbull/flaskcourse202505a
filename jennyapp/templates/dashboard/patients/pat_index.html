@@ -22,16 +22,16 @@
                         <tr>
                             <th scope="col"
                                 class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter sm:pl-6 lg:pl-8">
-                                Name</th>
+                                Name
+                            </th>
                             <th scope="col"
                                 class="sticky top-0 z-10 hidden border-b border-gray-300 bg-white/75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter sm:table-cell">
-                                Title</th>
+                                Email
+                            </th>
                             <th scope="col"
-                                class="sticky top-0 z-10 hidden border-b border-gray-300 bg-white/75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter lg:table-cell">
-                                Email</th>
-                            <th scope="col"
-                                class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter">
-                                Role</th>
+                                class="sticky top-0 z-10 hidden border-b border-gray-300 bg-white/75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter sm:table-cell">
+                                Sessions
+                            </th>
                             <th scope="col"
                                 class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 pr-4 pl-3 backdrop-blur-sm backdrop-filter sm:pr-6 lg:pr-8">
                                 <span class="sr-only">Edit</span>
@@ -40,25 +40,27 @@
                     </thead>
                     <tbody>
                         <tr>
+                            {% for patient in patients %}
                             <td
                                 class="border-b border-gray-200 py-4 pr-3 pl-4 text-sm font-medium whitespace-nowrap text-gray-900 sm:pl-6 lg:pl-8">
-                                Lindsay Walton</td>
+                                {{ patient.full_name }}
+                            </td>
                             <td
                                 class="hidden border-b border-gray-200 px-3 py-4 text-sm whitespace-nowrap text-gray-500 sm:table-cell">
-                                Front-end Developer</td>
+                                {{ patient.email }}
+                            </td>
                             <td
-                                class="hidden border-b border-gray-200 px-3 py-4 text-sm whitespace-nowrap text-gray-500 lg:table-cell">
-                                lindsay.walton@example.com</td>
-                            <td class="border-b border-gray-200 px-3 py-4 text-sm whitespace-nowrap text-gray-500">
-                                Member</td>
+                                class="hidden border-b border-gray-200 px-3 py-4 text-sm whitespace-nowrap text-gray-500 sm:table-cell">
+                                0
+                            </td>
                             <td
                                 class="relative border-b border-gray-200 py-4 pr-4 pl-3 text-right text-sm font-medium whitespace-nowrap sm:pr-8 lg:pr-8">
                                 <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit<span class="sr-only">,
-                                        Lindsay Walton</span></a>
+                                    {{ patient.full_name }}</span>
+                                </a>
                             </td>
+                            {% endfor %}
                         </tr>
-
-                        <!-- More people... -->
                     </tbody>
                 </table>
             </div>

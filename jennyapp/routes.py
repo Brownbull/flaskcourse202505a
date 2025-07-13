@@ -9,7 +9,7 @@ UPLOAD_FOLDER = 'static/uploads'
 
 from .extensions import db
 from .forms import RegisterForm, LoginForm, PatientForm
-from .models import User
+from .models import User, Patient
 
 main = Blueprint('main', __name__)
 @main.route('/')
@@ -85,40 +85,45 @@ def activity():
 @main.route('/patients')
 @login_required
 def patients():
-    return render_template('dashboard/patients/pat_index.html')
+    patients = Patient.query.all()
+    return render_template('dashboard/patients/pat_index.html', patients = patients)
 
 @main.route('/add_patient', methods=['GET', 'POST'])
 @login_required
 def add_patient():
     error = None
     form = PatientForm()
+    current_date = datetime.now() 
 
     if form.validate_on_submit():
-        print(f"full_name: {form.full_name.data}")
-        print(f"date_of_birth: {form.date_of_birth.data}")
-        print(f"gender: {form.gender.data}")
-        print(f"email: {form.email.data}")
-        print(f"phone_number: {form.phone_number.data}")
-        print(f"address: {form.address.data}")
-        print(f"adresss2: {form.adresss2.data}")
-        print(f"city: {form.city.data}")
-        print(f"region: {form.region.data}")
-        print(f"zip_code: {form.zip_code.data}")
-        print(f"country: {form.country.data}")
-        print(f"notifications: {form.notifications.data}")
+        new_patient = Patient(
+            full_name = form.full_name.data,
+            # date_of_birth = datetime.strptime(form.date_of_birth.data, '%Y-%m-%d').date(),
+            date_of_birth=form.date_of_birth.data,
+            gender = form.gender.data,
+            email = form.email.data,
+            phone_number_1 = form.phone_number_1.data,
+            phone_number_2 = form.phone_number_2.data,
+            address_1 = form.address_1.data,
+            address_2 = form.address_2.data,
+            city = form.city.data,
+            region = form.region.data,
+            country = form.country.data,
+            zip_code = form.zip_code.data,
+            notifications = form.notifications.data,
+            join_date = current_date,
+            # ME
+            medical_history = "",
+            current_medications = "",
+            allergies = "",
+            emergency_contact_name = "",
+            emergency_contact_number = "",
+            emergency_contact_relationship = "",
+            )
         
-
-        # patient = User(
-        #     full_name = form.full_name.data,
-        #     date_of_birth = form.date_of_birth.data,
-        #     gender = form.gender.data,
-        #     email = form.email.data,
-        #     phone = form.phone.data,
-        #     address = form.address.data,
-        #     join_date = datetime.now()
-        # )
-        # db.session.add(patient)
-        # db.session.commit()
+        db.session.add(new_patient)
+        db.session.commit()
+        
         return redirect(url_for('main.patients'))
     
     context = {

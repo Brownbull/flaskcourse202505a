@@ -1,3 +1,4 @@
+from datetime import date
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileAllowed
 from wtforms import FileField, StringField, PasswordField, BooleanField, TextAreaField, DateField, EmailField, SelectField
@@ -231,7 +232,7 @@ class LoginForm(FlaskForm):
 
 class PatientForm(FlaskForm):
     full_name = StringField('Full Name', validators=[DataRequired(), Length(max=200)])
-    date_of_birth = DateField('Date of Birth', format='%Y-%m-%d')
+    date_of_birth = DateField('Date of Birth', format='%Y-%m-%d', default = date(1900, 1, 1))
     gender = SelectField('Gender', choices=[('male', 'Male'), ('female', 'Female'), ], default='other')
     email = EmailField('Email', validators=[DataRequired(), Length(max=120), Email(message='Invalid email address.')])
     phone_number_1 = StringField('Phone Number', validators=[Length(max=20)])
@@ -240,14 +241,13 @@ class PatientForm(FlaskForm):
     address_2 = StringField('Address 2', validators=[Length(max=200)])
     city = StringField('City', validators=[Length(max=100)])
     region = SelectField('Region', choices=chile_regions, default=chile_regions[11])
-    zip_code = StringField('Zip Code', validators=[Length(max=20)])
     country = SelectField('Country', choices=world_countries, default=world_countries[37])
+    zip_code = StringField('Zip Code', validators=[Length(max=20)])
     notifications = BooleanField('Receive Notifications', default=False)
-    join_date = StringField('Join Date', validators=[DataRequired()])
     # MEDICAL FIELDS
-    medical_history = TextAreaField('Medical History', default='')
-    current_medications = TextAreaField('Current Medications', default='')
-    allergies = TextAreaField('Allergies', default='')
+    medical_history = StringField('Medical History', validators=[Length(max=200)], default='')
+    current_medications = StringField('Current Medications', validators=[Length(max=200)], default='')
+    allergies = StringField('Allergies', validators=[Length(max=200)], default='')
     emergency_contact_name = StringField('Emergency Contact Name', validators=[Length(max=100)], default='')
     emergency_contact_number = StringField('Emergency Contact Number', validators=[Length(max=20)], default='')
     emergency_contact_relationship = StringField('Emergency Contact Relationship', validators=[Length(max=100)], default='')
