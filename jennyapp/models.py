@@ -42,13 +42,4 @@ class Patient(db.Model):
     emergency_contact_number = db.Column(db.String(20), nullable=True)
     emergency_contact_relationship = db.Column(db.String(100), nullable=True)
 
-    # @property
-    # def date_of_birth(self):
-    #     raise AttributeError('date_of_birth is not a readable attribute')
-    # @date_of_birth.setter
-    # def date_of_birth(self, date_of_birth):
-    #     self.date_of_birth_sql = datetime.strptime(date_of_birth, '%Y-%m-%d') if date_of_birth else None
-        
-    # @date_of_birth.getter
-    # def date_of_birth(self):
-    #     return self.date_of_birth_sql.strftime('%Y-%m-%d') if self.date_of_birth_sql else ''
+

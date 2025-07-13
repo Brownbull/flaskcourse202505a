@@ -11,7 +11,7 @@
                 <div class="sm:col-span-4">
                     <label for="first-name" class="block text-sm/6 font-medium text-gray-900">Full Name</label>
                     <div class="mt-2">
-                        {{ form.full_name(placeholder="John Doe", class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300
+                        {{ form.full_name( class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300
                         placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6") }}
                     </div>
                 </div>
@@ -20,7 +20,7 @@
                     <label for="username" class="block text-sm/6 font-medium text-gray-900">Date of Birth</label>
                     <div class="mt-2">
                         <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
-                            {{ form.date_of_birth(class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none
+                            {{ form.date_of_birth( class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none
                             sm:text-sm/6")}}
                         </div>
                     </div>
@@ -44,7 +44,7 @@
                 <div class="sm:col-span-3 sm:col-start-1">
                     <label for="email" class="block text-sm/6 font-medium text-gray-900">Email address</label>
                     <div class="mt-2">
-                        {{ form.email(placeholder="8aOeH@example.com", class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300
+                        {{ form.email( class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300
                         placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6")}}
                     </div>
                 </div>
@@ -55,7 +55,7 @@
                         <div
                             class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
                             <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">+56</div>
-                            {{ form.phone_number_1(placeholder="947381233", class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6" )}}
+                            {{ form.phone_number_1( class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6" )}}
                         </div>
                     </div>
                 </div>
@@ -66,7 +66,7 @@
                         <div
                             class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
                             <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">+56</div>
-                            {{ form.phone_number_2(placeholder="947381233", class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6" )}}
+                            {{ form.phone_number_2( class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6" )}}
                         </div>
                     </div>
                 </div>
@@ -75,15 +75,15 @@
                 <div class="sm:col-span-4 sm:col-start-1">
                     <label for="street-address" class="block text-sm/6 font-medium text-gray-900">Address</label>
                     <div class="mt-2">
-                        {{ form.address_1( placeholder="Av. Pichincha 123", class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6")}}
-                        {{ form.address_2( placeholder="Depto 5B", class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6")}}
+                        {{ form.address_1(  class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6")}}
+                        {{ form.address_2(  class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6")}}
                     </div>
                 </div>
 
                 <div class="sm:col-span-2 sm:col-start-1">
                     <label for="city" class="block text-sm/6 font-medium text-gray-900">City</label>
                     <div class="mt-2">
-                        {{ form.city(placeholder="Villarrica", class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300
+                        {{ form.city( class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300
                         placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6")}}
                     </div>
                 </div>
@@ -91,7 +91,7 @@
                 <div class="sm:col-span-2">
                     <label for="country" class="block text-sm/6 font-medium text-gray-900">Region</label>
                     <div class="mt-2 grid grid-cols-1">
-                        {{ form.region(class="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 pr-8 pl-3 text-base text-gray-900 outline-1
+                        {{ form.region( class="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 pr-8 pl-3 text-base text-gray-900 outline-1
                         -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" )}}
                         <svg class="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-500 sm:size-4"
                             viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" data-slot="icon">
@@ -119,7 +119,7 @@
                 <div class="sm:col-span-1">
                     <label for="postal-code" class="block text-sm/6 font-medium text-gray-900">Postal code</label>
                     <div class="mt-2">
-                        {{form.zip_code(placeholder="8320000", class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300
+                        {{form.zip_code( class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300
                         placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6")}}
                     </div>
                 </div>
@@ -137,7 +137,7 @@
                         <div class="flex gap-3">
                             <div class="flex h-6 shrink-0 items-center">
                                 <div class="group grid size-4 grid-cols-1">
-                                    {{ form.notifications(checked = True, class="col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white checked:border-indigo-600
+                                    {{ form.notifications(checked=edit_patient.notifications, class="col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white checked:border-indigo-600
                                     checked:bg-indigo-600 indeterminate:border-indigo-600 indeterminate:bg-indigo-600 focus-visible:outline-2
                                     focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100
                                     disabled:checked:bg-gray-100 forced-colors:appearance-auto")}}
@@ -161,12 +161,19 @@
         </div>
 
     </div>
-
     <div class="mt-6 flex items-center gap-x-6">
-        <button type="submit" class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-            Add
+        <button type="submit" 
+            class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+            Update
         </button>
-        <a href="{{ url_for('main.patients') }}" type="button" class="text-sm/6 font-semibold text-gray-900">Cancel</a>
+        <a href="{{ url_for('main.patients') }}" type="button" 
+            class="text-sm/6 font-semibold text-gray-900">
+            Cancel
+        </a>
+        <a href="{{ url_for('main.patients') }}" type="button" 
+            class="rounded-md bg-pink-50 px-3 py-2 text-sm font-semibold text-pink-700 shadow-xs hover:bg-pink-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+            Delete
+        </a>
     </div>
 </form>
   

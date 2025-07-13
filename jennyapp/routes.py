@@ -132,6 +132,46 @@ def add_patient():
     }
     return render_template('dashboard/patients/pat_add.html', **context)
 
+@main.route('/', methods=['GET', 'POST'], defaults = {'patient_id': None})
+@main.route('/edit_patient/<int:patient_id>', methods=['GET', 'POST'])
+@login_required
+def edit_patient(patient_id):
+    edit_patient = None
+    error = {}
+    form = PatientForm()
+
+    if patient_id:
+        edit_patient = Patient.query.get_or_404(patient_id)
+        form = PatientForm(obj=edit_patient)
+    else:
+        form = PatientForm()
+        # print(f"date_of_birth: {edit_patient.date_of_birth} {type({edit_patient.date_of_birth})}")
+
+    # if request.method == 'POST':
+    #     edit_patient.full_name = request.form['full_name']
+    #     edit_patient.date_of_birth = request.form['date_of_birth']
+    #     edit_patient.gender = request.form['gender']
+    #     edit_patient.email = request.form['email']
+    #     edit_patient.phone_number_1 = request.form['phone_number_1']
+    #     edit_patient.phone_number_2 = request.form['phone_number_2']
+    #     edit_patient.address_1 = request.form['address_1']
+    #     edit_patient.address_2 = request.form['address_2']
+    #     edit_patient.city = request.form['city']
+    #     edit_patient.region = request.form['region']
+    #     edit_patient.country = request.form['country']
+    #     edit_patient.zip_code = request.form['zip_code']
+    #     edit_patient.notifications = request.form['notifications']
+    #     db.session.commit()
+    #     return redirect(url_for('main.patients'))
+
+    context = {
+        'form': form,
+        'error': error,
+        'edit_patient': edit_patient
+    }
+    
+    return render_template('dashboard/patients/pat_edit.html', **context)
+
 @main.route('/session')
 @login_required
 def session():
