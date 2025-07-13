@@ -1,7 +1,7 @@
-from datetime import date
+from datetime import date, datetime
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileAllowed
-from wtforms import FileField, StringField, PasswordField, BooleanField, TextAreaField, DateField, EmailField, SelectField
+from wtforms import FileField, StringField, PasswordField, BooleanField, TextAreaField, DateField, TimeField, EmailField, SelectField, IntegerField
 from wtforms.validators import InputRequired, DataRequired, Length, EqualTo, Email, Optional
 
 ALLOWED_IMAGE_EXTENSIONS = ['jpg', 'jpeg', 'png', 'gif', 'bmp']
@@ -222,12 +222,12 @@ world_countries = ["Afganistán",
 ]
 
 class RegisterForm(FlaskForm):
-    email = StringField('Email', validators=[InputRequired('Email is required'), Length(max=120, message='Email must be less than 120 characters')])
+    email = EmailField('Email', validators=[InputRequired('Email is required'), Length(max=120), Email(message='Invalid email address.')])
     password = PasswordField('Password', validators=[InputRequired('Password is required'), Length(min=6, max=120, message='Password must be between 6 and 120 characters')])
     confirm_password = PasswordField('Confirm Password', validators=[DataRequired('Password is required'), EqualTo('password')])
 
 class LoginForm(FlaskForm):
-    email = StringField('Email', validators=[InputRequired('Email is required'), Length(max=120, message='Email must be less than 120 characters')])
+    email = EmailField('Email', validators=[InputRequired('Email is required'), Length(max=120), Email(message='Invalid email address.')])
     password = PasswordField('Password', validators=[InputRequired('Password is required'), Length(min=6, max=120, message='Password must be between 6 and 120 characters')])
     remember_me = BooleanField('Remember Me', default=False)
 
@@ -245,11 +245,29 @@ class PatientForm(FlaskForm):
     country = SelectField('Country', choices=world_countries, default=world_countries[37])
     zip_code = StringField('Zip Code', validators=[Length(max=20)])
     notifications = BooleanField('Receive Notifications', default=False)
-    # MEDICAL FIELDS
+    # MEDICAL
     medical_history = TextAreaField('Medical History', validators=[Length(max=200)], default='')
     current_medications = TextAreaField('Current Medications', validators=[Length(max=200)], default='')
     allergies = TextAreaField('Allergies', validators=[Length(max=200)], default='')
     emergency_contact_name = StringField('Emergency Contact Name', validators=[Length(max=100)], default='')
     emergency_contact_number = StringField('Emergency Contact Number', validators=[Length(max=20)], default='')
     emergency_contact_relationship = StringField('Emergency Contact Relationship', validators=[Length(max=100)], default='')
+
+class SessionForm(FlaskForm):
+    doctor_email = EmailField('Email', validators=[InputRequired('Email is required'), Length(max=120), Email(message='Invalid email address.')])
+    patient_full_name = StringField('Full Name', validators=[DataRequired(), Length(max=200)])
+    session_date = DateField('Date', format='%Y-%m-%d', default = date.today())
+    session_time = TimeField('Time', format='%H:%M', default = datetime.now().strftime('%H:%M'))
+    # MEDICAL
+    consent = BooleanField('Consent', default=False)
+    reason_for_visit = StringField('Reason for Visit', validators=[DataRequired(), Length(max=200)])
+    medications = StringField('Medications', validators=[DataRequired(), Length(max=200)])
+    # TRANSACTION
+    payment_method = StringField('Payment Method', validators=[Optional(), Length(max=50)])
+    total_amount = IntegerField('Total Amount', validators=[Optional()])
+    payment_status = SelectField('Payment Status', choices=[('paid', 'Paid'), ('unpaid', 'Unpaid')], default='unpaid')
+
+
+
+
 

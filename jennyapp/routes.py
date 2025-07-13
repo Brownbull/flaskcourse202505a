@@ -8,7 +8,7 @@ import os
 UPLOAD_FOLDER = 'static/uploads'
 
 from .extensions import db
-from .forms import RegisterForm, LoginForm, PatientForm
+from .forms import RegisterForm, LoginForm, PatientForm, SessionForm
 from .models import User, Patient
 
 main = Blueprint('main', __name__)
@@ -76,11 +76,6 @@ def dashboard():
 @login_required
 def profile():
     return render_template('dashboard/profile.html')
-
-@main.route('/activity')
-@login_required
-def activity():
-    return render_template('dashboard/activity.html')
 
 @main.route('/patients')
 @login_required
@@ -189,10 +184,22 @@ def delete_patient(patient_id):
     db.session.commit()
     return redirect(url_for('main.patients'))
 
-@main.route('/session')
+@main.route('/sessions')
 @login_required
-def session():
-    return render_template('dashboard/session.html')
+def sessions():
+    return render_template('dashboard/sessions/ses_index.html')
+
+@main.route('/edit_session')
+@login_required
+def edit_session():
+    error = None
+    form = SessionForm()
+
+    context = {
+        'error': error,
+        'form': form
+    }
+    return render_template('dashboard/sessions/ses_edit.html', **context)
 
 @main.route('/calendar')
 @login_required
