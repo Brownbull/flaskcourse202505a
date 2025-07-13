@@ -106,16 +106,22 @@
     <div class="mt-6 flex items-center gap-x-6">
         <button type="submit" 
             class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+            {% if session_id %}
             Update
+            {% else %}
+            Add
+            {% endif %}
         </button>
         <a href="{{ url_for('main.sessions') }}" type="button" 
             class="text-sm/6 font-semibold text-gray-900">
             Cancel
         </a>
+        {% if session_id %}
         <a href="{{ url_for('main.delete_session', session_id=session_id) }}" type="button" 
             class="rounded-md bg-pink-50 px-3 py-2 text-sm font-semibold text-pink-700 shadow-xs hover:bg-pink-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
             Delete
         </a>
+        {% endif %}
     </div>
 </form>
 {% endblock dashboard_content %}

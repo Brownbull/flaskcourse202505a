@@ -198,7 +198,6 @@ def sessions():
 @main.route('/edit_session', methods=['GET', 'POST'])
 @main.route('/edit_session/<int:session_id>', methods=['GET', 'POST'])
 @login_required
-
 def edit_session(session_id=None):
     error = None
     session_obj = None
