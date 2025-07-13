@@ -1,7 +1,7 @@
 {% extends 'dashboard/dash_nav.html' %}
 {% block dashboard_content %}
 
-<form action="{{ url_for('main.add_patient') }}" method="POST" enctype="multipart/form-data">
+<form action="{{ url_for('main.edit_patient', patient_id=patient_id) }}" method="POST" enctype="multipart/form-data">
     {{ form.csrf_token }}
     <div class="space-y-12">
         <div class="border-b border-gray-900/10 pb-12">
@@ -43,9 +43,9 @@
                 <div class="sm:col-span-3 sm:col-start-1">
                     <label for="email" class="block text-sm/6 font-medium text-gray-900">Email address</label>
                     <div class="mt-2">
-                        <div class="block w-full rounded-md bg-gray-100 px-3 py-1.5 text-base text-gray-500 outline-1 -outline-offset-1 outline-gray-300 sm:text-sm/6">
-                            {{edit_patient.email}}
-                        </div>
+                        {{ form.email(class="block w-full rounded-md bg-white px-3 py-1.5 text-base
+                        text-gray-900 outline-1 -outline-offset-1 outline-gray-300
+                        placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6")}}
                     </div>
                 </div>
 
@@ -231,7 +231,7 @@
             class="text-sm/6 font-semibold text-gray-900">
             Cancel
         </a>
-        <a href="{{ url_for('main.patients') }}" type="button" 
+        <a href="{{ url_for('main.delete_patient', patient_id=edit_patient.id) }}" type="button" 
             class="rounded-md bg-pink-50 px-3 py-2 text-sm font-semibold text-pink-700 shadow-xs hover:bg-pink-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
             Delete
         </a>

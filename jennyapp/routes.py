@@ -141,36 +141,53 @@ def edit_patient(patient_id):
     form = PatientForm()
 
     if patient_id:
-        edit_patient = Patient.query.get_or_404(patient_id)
+        edit_patient = Patient.query.get_or_404(patient_id, description=f'Patient with id {patient_id} not found')
         form = PatientForm(obj=edit_patient)
     else:
         form = PatientForm()
         # print(f"date_of_birth: {edit_patient.date_of_birth} {type({edit_patient.date_of_birth})}")
 
-    # if request.method == 'POST':
-    #     edit_patient.full_name = request.form['full_name']
-    #     edit_patient.date_of_birth = request.form['date_of_birth']
-    #     edit_patient.gender = request.form['gender']
-    #     edit_patient.email = request.form['email']
-    #     edit_patient.phone_number_1 = request.form['phone_number_1']
-    #     edit_patient.phone_number_2 = request.form['phone_number_2']
-    #     edit_patient.address_1 = request.form['address_1']
-    #     edit_patient.address_2 = request.form['address_2']
-    #     edit_patient.city = request.form['city']
-    #     edit_patient.region = request.form['region']
-    #     edit_patient.country = request.form['country']
-    #     edit_patient.zip_code = request.form['zip_code']
-    #     edit_patient.notifications = request.form['notifications']
-    #     db.session.commit()
-    #     return redirect(url_for('main.patients'))
+    if request.method == 'POST':
+        print(request.form['notifications'])
+        edit_patient.full_name = request.form['full_name']
+        edit_patient.date_of_birth = datetime.strptime(request.form['date_of_birth'], '%Y-%m-%d').date()
+        edit_patient.gender = request.form['gender']
+        # edit_patient.email = edit_patient.email
+        edit_patient.phone_number_1 = request.form['phone_number_1']
+        edit_patient.phone_number_2 = request.form['phone_number_2']
+        edit_patient.address_1 = request.form['address_1']
+        edit_patient.address_2 = request.form['address_2']
+        edit_patient.city = request.form['city']
+        edit_patient.region = request.form['region']
+        edit_patient.country = request.form['country']
+        edit_patient.zip_code = request.form['zip_code']
+        edit_patient.notifications = True if request.form['notifications']  == 'y' else False
+        edit_patient.medical_history = request.form['medical_history']
+        edit_patient.current_medications = request.form['current_medications']
+        edit_patient.allergies = request.form['allergies']
+        edit_patient.emergency_contact_name = request.form['emergency_contact_name']
+        edit_patient.emergency_contact_number = request.form['emergency_contact_number']
+        edit_patient.emergency_contact_relationship = request.form['emergency_contact_relationship']
+        db.session.commit()
+        print("Patient updated")
+        return redirect(url_for('main.patients'))
 
     context = {
         'form': form,
         'error': error,
+        'patient_id': patient_id,
         'edit_patient': edit_patient
     }
     
     return render_template('dashboard/patients/pat_edit.html', **context)
+
+@main.route('/delete_patient/<int:patient_id>', methods=['GET', 'POST'])
+@login_required
+def delete_patient(patient_id):
+    patient = Patient.query.get_or_404(patient_id, description=f'Patient with id {patient_id} not found')
+    db.session.delete(patient)
+    db.session.commit()
+    return redirect(url_for('main.patients'))
 
 @main.route('/session')
 @login_required

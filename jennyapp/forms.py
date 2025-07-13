@@ -2,7 +2,7 @@ from datetime import date
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileAllowed
 from wtforms import FileField, StringField, PasswordField, BooleanField, TextAreaField, DateField, EmailField, SelectField
-from wtforms.validators import InputRequired, DataRequired, Length, EqualTo, Email
+from wtforms.validators import InputRequired, DataRequired, Length, EqualTo, Email, Optional
 
 ALLOWED_IMAGE_EXTENSIONS = ['jpg', 'jpeg', 'png', 'gif', 'bmp']
 
@@ -21,7 +21,8 @@ chile_regions = ["Región de Arica y Parinacota",
     "Región de Los Ríos",
     "Región de Los Lagos",
     "Región de Aysén del General Carlos Ibáñez del Campo",
-    "Región de Magallanes y de la Antártica Chilena"]
+    "Región de Magallanes y de la Antártica Chilena",
+    "Otra"]
 
 world_countries = ["Afganistán",
     "Albania",
@@ -233,8 +234,8 @@ class LoginForm(FlaskForm):
 class PatientForm(FlaskForm):
     full_name = StringField('Full Name', validators=[DataRequired(), Length(max=200)])
     date_of_birth = DateField('Date of Birth', format='%Y-%m-%d', default = date(1900, 1, 1))
-    gender = SelectField('Gender', choices=[('male', 'Male'), ('female', 'Female'), ], default='other')
-    email = EmailField('Email', validators=[DataRequired(), Length(max=120), Email(message='Invalid email address.')])
+    gender = SelectField('Gender', choices=[('male', 'Male'), ('female', 'Female'),  ('other', 'Other'), ], default='other')
+    email = EmailField('Email', validators=[Optional(), Length(max=120), Email(message='Invalid email address.')])
     phone_number_1 = StringField('Phone Number', validators=[Length(max=20)])
     phone_number_2 = StringField('Phone Number', validators=[Length(max=20)])
     address_1 = StringField('Address', validators=[Length(max=200)])

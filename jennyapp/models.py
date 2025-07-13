@@ -23,7 +23,7 @@ class Patient(db.Model):
     full_name = db.Column(db.String(200), nullable=False)
     date_of_birth = db.Column(db.DateTime, nullable=True)
     gender = db.Column(db.String(20), nullable=True)
-    email = db.Column(db.String(120), nullable=False)
+    email = db.Column(db.String(120), nullable=True)
     phone_number_1 = db.Column(db.String(20), nullable=True)
     phone_number_2 = db.Column(db.String(20), nullable=True)
     address_1 = db.Column(db.String(200), nullable=True)
