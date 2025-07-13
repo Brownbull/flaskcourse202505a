@@ -1,7 +1,7 @@
 {% extends 'dashboard/dash_nav.html' %}
 {% block dashboard_content %}
 
-<form action="{{ url_for('main.edit_session', session_id = session_id) }}" method="POST" enctype="multipart/form-data">
+<form action="{{ url_for('main.edit_session') }}" method="POST" enctype="multipart/form-data">
     {{ form.csrf_token }}
     <div class="space-y-12">
         <div class="border-b border-gray-900/10 pb-12">
@@ -79,15 +79,12 @@
             <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                 <div class="sm:col-span-3 sm:col-start-1">
                     <label for="total_amount" class="block text-sm/6 font-medium text-gray-900">Total Amount</label>
-                      <div class="mt-2">
-                        <div class="flex items-center rounded-md bg-white px-3 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
-                        <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">$</div>
-                        {{ form.total_amount(class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6") }}
-                        <div id="price-currency" class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">CLP</div>
-                        </div>
+                    <div class="mt-2">
+                        {{ form.total_amount(class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1
+                        -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2
+                        focus:outline-indigo-600 sm:text-sm/6") }}
                     </div>
                 </div>
-
                 <div class="sm:col-span-2 sm:col-start-1">
                     <label for="payment_method" class="block text-sm/6 font-medium text-gray-900">Payment Method</label>
                     <div class="mt-2">
@@ -112,7 +109,7 @@
             class="text-sm/6 font-semibold text-gray-900">
             Cancel
         </a>
-        <a href="{{ url_for('main.delete_session', session_id=session_id) }}" type="button" 
+        <a href="" type="button" 
             class="rounded-md bg-pink-50 px-3 py-2 text-sm font-semibold text-pink-700 shadow-xs hover:bg-pink-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
             Delete
         </a>

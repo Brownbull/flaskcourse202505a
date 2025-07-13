@@ -187,29 +187,40 @@ def delete_patient(patient_id):
 @main.route('/sessions')
 @login_required
 def sessions():
-    return render_template('dashboard/sessions/ses_index.html')
+    sessions = Session.query.all()
+    context = {
+        'sessions': sessions,
+    }
+    return render_template('dashboard/sessions/ses_index.html', **context)
 
 
 # Edit or add a session
 @main.route('/edit_session', methods=['GET', 'POST'])
 @main.route('/edit_session/<int:session_id>', methods=['GET', 'POST'])
 @login_required
+
 def edit_session(session_id=None):
     error = None
     session_obj = None
-    form = SessionForm()
-    form.doctor_email.choices = [(u.email, u.email) for u in User.query.all()]
-    form.patient_full_name.choices = [(p.full_name, p.full_name) for p in Patient.query.all()]
+    doctor_choices = [(u.email, u.email) for u in User.query.all()]
+    patient_choices = [(p.full_name, p.full_name) for p in Patient.query.all()]
 
-    # If editing, load session
     if session_id:
         session_obj = Session.query.get_or_404(session_id, description=f'Session with id {session_id} not found')
         form = SessionForm(obj=session_obj)
+        form.doctor_email.choices = doctor_choices
+        form.patient_full_name.choices = patient_choices
+        form.doctor_email.data = session_obj.doctor_email
+        form.patient_full_name.data = session_obj.patient_full_name
+    else:
+        form = SessionForm()
+        form.doctor_email.choices = doctor_choices
+        form.patient_full_name.choices = patient_choices
 
     if request.method == 'POST':
         if form.validate_on_submit():
-            # If editing, update; else, create new
             if session_obj:
+                # Update existing session
                 session_obj.doctor_email = form.doctor_email.data
                 session_obj.patient_full_name = form.patient_full_name.data
                 session_obj.session_date = form.session_date.data
@@ -220,8 +231,9 @@ def edit_session(session_id=None):
                 session_obj.payment_method = form.payment_method.data
                 session_obj.total_amount = form.total_amount.data
                 session_obj.payment_status = form.payment_status.data
+                db.session.commit()
             else:
-                # Find patient by name (or create new if not found)
+                # Create new session
                 patient = Patient.query.filter_by(full_name=form.patient_full_name.data).first()
                 if not patient:
                     patient = Patient(full_name=form.patient_full_name.data)
@@ -242,7 +254,7 @@ def edit_session(session_id=None):
                     payment_status=form.payment_status.data
                 )
                 db.session.add(session_obj)
-            db.session.commit()
+                db.session.commit()
             return redirect(url_for('main.sessions'))
         else:
             error = 'Form validation failed. Please check your input.'
@@ -254,6 +266,14 @@ def edit_session(session_id=None):
         'session_obj': session_obj
     }
     return render_template('dashboard/sessions/ses_edit.html', **context)
+
+@main.route('/delete_session/<int:session_id>', methods=['GET', 'POST'])
+@login_required
+def delete_session(session_id):
+    session = Session.query.get_or_404(session_id, description=f'session with id {session_id} not found')
+    db.session.delete(session)
+    db.session.commit()
+    return redirect(url_for('main.sessions'))
 
 @main.route('/calendar')
 @login_required
