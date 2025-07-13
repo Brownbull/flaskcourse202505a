@@ -257,13 +257,13 @@ class SessionForm(FlaskForm):
     doctor_email = EmailField('Email', validators=[InputRequired('Email is required'), Length(max=120), Email(message='Invalid email address.')])
     patient_full_name = StringField('Full Name', validators=[DataRequired(), Length(max=200)])
     session_date = DateField('Date', format='%Y-%m-%d', default = date.today())
-    session_time = TimeField('Time', format='%H:%M', default = datetime.now().strftime('%H:%M'))
+    session_time = TimeField('Time', format='%H:%M', default = datetime.now().time())
     # MEDICAL
     consent = BooleanField('Consent', default=False)
-    reason_for_visit = StringField('Reason for Visit', validators=[DataRequired(), Length(max=200)])
-    medications = StringField('Medications', validators=[DataRequired(), Length(max=200)])
+    reason_for_visit = TextAreaField('Reason for Visit', validators=[DataRequired(), Length(max=200)])
+    medications = TextAreaField('Medications', validators=[Length(max=200)], default='')
     # TRANSACTION
-    payment_method = StringField('Payment Method', validators=[Optional(), Length(max=50)])
+    payment_method = SelectField('Payment Method', choices=[('cash', 'Cash'), ('credit_card', 'Credit Card'), ('debit_card', 'Debit Card')], default='cash')
     total_amount = IntegerField('Total Amount', validators=[Optional()])
     payment_status = SelectField('Payment Status', choices=[('paid', 'Paid'), ('unpaid', 'Unpaid')], default='unpaid')
 
