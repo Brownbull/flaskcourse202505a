@@ -245,9 +245,9 @@ class PatientForm(FlaskForm):
     zip_code = StringField('Zip Code', validators=[Length(max=20)])
     notifications = BooleanField('Receive Notifications', default=False)
     # MEDICAL FIELDS
-    medical_history = StringField('Medical History', validators=[Length(max=200)], default='')
-    current_medications = StringField('Current Medications', validators=[Length(max=200)], default='')
-    allergies = StringField('Allergies', validators=[Length(max=200)], default='')
+    medical_history = TextAreaField('Medical History', validators=[Length(max=200)], default='')
+    current_medications = TextAreaField('Current Medications', validators=[Length(max=200)], default='')
+    allergies = TextAreaField('Allergies', validators=[Length(max=200)], default='')
     emergency_contact_name = StringField('Emergency Contact Name', validators=[Length(max=100)], default='')
     emergency_contact_number = StringField('Emergency Contact Number', validators=[Length(max=20)], default='')
     emergency_contact_relationship = StringField('Emergency Contact Relationship', validators=[Length(max=100)], default='')
