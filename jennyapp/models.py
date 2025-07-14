@@ -61,12 +61,13 @@ class Session(db.Model):
     payment_status = db.Column(db.String(20), nullable=False, default='unpaid')
     created_at = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
 
-    documents = db.relationship('SessionDocument', backref='session', lazy=True)
+    documents = db.relationship('SessionDocument', backref='session', cascade="all, delete-orphan")
 
 class SessionDocument(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    session_id = db.Column(db.Integer, db.ForeignKey('session.id'), nullable=False)
+    session_id = db.Column(db.Integer, db.ForeignKey('session.id', ondelete="CASCADE"), nullable=False)
     filename = db.Column(db.String(200), nullable=False)
     file_data = db.Column(db.LargeBinary, nullable=False)
     upload_date = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
+    
     

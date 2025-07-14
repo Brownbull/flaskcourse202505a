@@ -274,17 +274,22 @@ def edit_session(session_id=None):
                 session_obj.total_amount = form.total_amount.data
                 session_obj.payment_status = form.payment_status.data
                 db.session.commit()
-                # Handle file uploads for update
+                # Handle document deletions
+                delete_ids = request.form.get('delete_documents', '')
+                if delete_ids:
+                    for doc_id in delete_ids.split(','):
+                        doc_id = doc_id.strip()
+                        if doc_id:
+                            doc = SessionDocument.query.get(int(doc_id))
+                            if doc and doc.session_id == session_obj.id:
+                                db.session.delete(doc)
+                    db.session.commit()
+                # Handle file uploads for update (store only in DB)
                 if form.documents.data:
-                    upload_dir = os.path.join(current_app.root_path, UPLOAD_FOLDER)
-                    os.makedirs(upload_dir, exist_ok=True)
                     for file in form.documents.data:
                         if file and file.filename:
                             filename = secure_filename(file.filename)
-                            file_path = os.path.join(upload_dir, filename)
-                            file.save(file_path)
-                            with open(file_path, 'rb') as f:
-                                file_bytes = f.read()
+                            file_bytes = file.read()
                             doc = SessionDocument(
                                 session_id=session_obj.id,
                                 filename=filename,
@@ -317,20 +322,17 @@ def edit_session(session_id=None):
                 )
                 db.session.add(session_obj)
                 db.session.commit()
-                # Handle file uploads for new session
+                # Handle file uploads for new session (store only in DB)
                 if form.documents.data:
-                    upload_dir = os.path.join(current_app.root_path, UPLOAD_FOLDER)
-                    os.makedirs(upload_dir, exist_ok=True)
                     for file in form.documents.data:
                         if file and file.filename:
                             filename = secure_filename(file.filename)
-                            file_path = os.path.join(upload_dir, filename)
-                            file.save(file_path)
+                            file_bytes = file.read()
                             doc = SessionDocument(
                                 session_id=session_obj.id,
                                 filename=filename,
-                                filetype=file.mimetype,
-                                uploaded_at=datetime.now()
+                                file_data=file_bytes,
+                                upload_date=datetime.now()
                             )
                             db.session.add(doc)
                     db.session.commit()
