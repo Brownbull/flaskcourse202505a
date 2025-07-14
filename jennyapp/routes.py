@@ -81,7 +81,15 @@ def profile():
 @login_required
 def patients():
     patients = Patient.query.all()
-    return render_template('dashboard/patients/pat_index.html', patients = patients)
+    # Build a list of dicts with patient and session_count
+    patient_data = []
+    for patient in patients:
+        session_count = Session.query.filter_by(patient_id=patient.id).count()
+        patient_data.append({
+            'patient': patient,
+            'session_count': session_count
+        })
+    return render_template('dashboard/patients/pat_index.html', patients=patient_data)
 
 @main.route('/add_patient', methods=['GET', 'POST'])
 @login_required
