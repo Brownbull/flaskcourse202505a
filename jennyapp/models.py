@@ -9,6 +9,8 @@ class User(UserMixin, db.Model):
     password_hash = db.Column(db.String(120), nullable=False)
     join_date = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
 
+    sessions = db.relationship('Session', backref='user', lazy=True)
+
     @property
     def password(self):
         raise AttributeError('password is not a readable attribute')
@@ -42,6 +44,8 @@ class Patient(db.Model):
     emergency_contact_name = db.Column(db.String(100), nullable=True)
     emergency_contact_number = db.Column(db.String(20), nullable=True)
     emergency_contact_relationship = db.Column(db.String(100), nullable=True)
+
+    sessions = db.relationship('Session', backref='patient', lazy=True)
 
 # Session model for appointments
 class Session(db.Model):
