@@ -1,7 +1,7 @@
 from datetime import date, datetime
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileAllowed
-from wtforms import FileField, StringField, PasswordField, BooleanField, TextAreaField, DateField, TimeField, EmailField, SelectField, IntegerField
+from wtforms import FileField, StringField, PasswordField, BooleanField, TextAreaField, DateField, TimeField, EmailField, SelectField, IntegerField, MultipleFileField
 from wtforms.validators import InputRequired, DataRequired, Length, EqualTo, Email, Optional
 
 ALLOWED_IMAGE_EXTENSIONS = ['jpg', 'jpeg', 'png', 'gif', 'bmp']
@@ -263,10 +263,14 @@ class SessionForm(FlaskForm):
     consent = BooleanField('Consent', default=False)
     reason_for_visit = TextAreaField('Reason for Visit', validators=[DataRequired(), Length(max=200)])
     medications = TextAreaField('Medications', validators=[Length(max=200)], default='')
+    diagnostic = TextAreaField('Diagnostic', validators=[Length(max=200)], default='')
     # TRANSACTION
     payment_method = SelectField('Payment Method', choices=[('cash', 'Cash'), ('credit_card', 'Credit Card'), ('debit_card', 'Debit Card')], default='cash')
     total_amount = IntegerField('Total Amount', validators=[Optional()])
     payment_status = SelectField('Payment Status', choices=[('paid', 'Paid'), ('unpaid', 'Unpaid')], default='unpaid')
+    # FILES
+    documents = MultipleFileField('Upload Documents', validators=[FileAllowed(['jpg', 'jpeg', 'png', 'gif', 'bmp', 'pdf', 'doc', 'docx', 'txt'], 'Images, PDF, Word, TXT only!')])
+    
 
 
 

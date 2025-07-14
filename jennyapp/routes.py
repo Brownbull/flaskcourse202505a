@@ -265,9 +265,11 @@ def edit_session(session_id=None):
                 session_obj.consent = form.consent.data
                 session_obj.reason_for_visit = form.reason_for_visit.data
                 session_obj.medications = form.medications.data
+                session_obj.diagnostic = form.diagnostic.data
                 session_obj.payment_method = form.payment_method.data
                 session_obj.total_amount = form.total_amount.data
                 session_obj.payment_status = form.payment_status.data
+                session_obj.documents = form.documents.data  # Handle file uploads if needed
                 db.session.commit()
             else:
                 # Create new session
@@ -276,6 +278,7 @@ def edit_session(session_id=None):
                     patient = Patient(full_name=form.patient_full_name.data)
                     db.session.add(patient)
                     db.session.commit()
+                    
                 session_obj = Session(
                     user_id=User.query.filter_by(email=form.doctor_email.data).first().id,
                     patient_id=patient.id,
@@ -286,9 +289,11 @@ def edit_session(session_id=None):
                     consent=form.consent.data,
                     reason_for_visit=form.reason_for_visit.data,
                     medications=form.medications.data,
+                    diagnostic=form.diagnostic.data,
                     payment_method=form.payment_method.data,
                     total_amount=form.total_amount.data,
-                    payment_status=form.payment_status.data
+                    payment_status=form.payment_status.data,
+                    documents=form.documents.data  # Handle file uploads if needed
                 )
                 db.session.add(session_obj)
                 db.session.commit()

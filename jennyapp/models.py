@@ -55,9 +55,18 @@ class Session(db.Model):
     consent = db.Column(db.Boolean, nullable=True)
     reason_for_visit = db.Column(db.String(200), nullable=False)
     medications = db.Column(db.String(200), nullable=True)
+    diagnostic = db.Column(db.String(200), nullable=True)
     payment_method = db.Column(db.String(50), nullable=True)
     total_amount = db.Column(db.Integer, nullable=True)
     payment_status = db.Column(db.String(20), nullable=False, default='unpaid')
     created_at = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
 
+    documents = db.relationship('Document', backref='session', lazy=True)
 
+class Document(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    session_id = db.Column(db.Integer, db.ForeignKey('session.id'), nullable=False)
+    filename = db.Column(db.String(200), nullable=False)
+    file_data = db.Column(db.LargeBinary, nullable=False)
+    upload_date = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
+    
