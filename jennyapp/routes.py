@@ -187,9 +187,47 @@ def delete_patient(patient_id):
 @main.route('/sessions')
 @login_required
 def sessions():
-    sessions = Session.query.all()
+    sort = request.args.get('sort', 'desc')
+    doctor = request.args.get('doctor', '')
+    patient = request.args.get('patient', '')
+    from_date = request.args.get('from_date', '')
+    to_date = request.args.get('to_date', '')
+    query = Session.query
+    if doctor:
+        query = query.filter(Session.doctor_email == doctor)
+    if patient:
+        query = query.filter(Session.patient_full_name == patient)
+    if from_date:
+        try:
+            from_date_obj = datetime.strptime(from_date, '%Y-%m-%d').date()
+            query = query.filter(Session.session_date >= from_date_obj)
+        except Exception:
+            pass
+    if to_date:
+        try:
+            to_date_obj = datetime.strptime(to_date, '%Y-%m-%d').date()
+            query = query.filter(Session.session_date <= to_date_obj)
+        except Exception:
+            pass
+    if sort == 'asc':
+        query = query.order_by(Session.session_date.asc(), Session.session_time.asc())
+    else:
+        query = query.order_by(Session.session_date.desc(), Session.session_time.desc())
+    sessions = query.all()
+
+    # For filter dropdowns
+    doctor_list = [u.email for u in User.query.all()]
+    patient_list = [p.full_name for p in Patient.query.all()]
+    
     context = {
         'sessions': sessions,
+        'sort': sort,
+        'doctor': doctor,
+        'patient': patient,
+        'from_date': from_date,
+        'to_date': to_date,
+        'doctor_list': doctor_list,
+        'patient_list': patient_list,
     }
     return render_template('dashboard/sessions/ses_index.html', **context)
 

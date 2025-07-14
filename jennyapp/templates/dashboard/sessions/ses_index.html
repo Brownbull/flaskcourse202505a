@@ -14,19 +14,58 @@
         </div>
     </div>
     <div class="mt-6 overflow-x-auto">
-        <table class="min-w-full divide-y divide-gray-200">
-            <thead class="bg-gray-50">
-                <tr>
-                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Date</th>
-                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Hour</th>
-                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Medic</th>
-                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Patient Name</th>
-                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Total Amount</th>
-                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Payment Status</th>
-                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
-                </tr>
-            </thead>
-            <tbody class="bg-white divide-y divide-gray-200">
+    <form method="get" class="mb-4 flex gap-4 items-center">
+        <div>
+            <label for="doctor" class="text-xs font-medium text-gray-700">Medic:</label>
+            <select name="doctor" id="doctor" class="ml-2 px-2 py-1 rounded border border-gray-300">
+                <option value="">All</option>
+                {% for d in doctor_list %}
+                <option value="{{ d }}" {% if doctor == d %}selected{% endif %}>{{ d }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div>
+            <label for="patient" class="text-xs font-medium text-gray-700">Patient:</label>
+            <select name="patient" id="patient" class="ml-2 px-2 py-1 rounded border border-gray-300">
+                <option value="">All</option>
+                {% for p in patient_list %}
+                <option value="{{ p }}" {% if patient == p %}selected{% endif %}>{{ p }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div>
+            <label for="from_date" class="text-xs font-medium text-gray-700">From:</label>
+            <input type="date" name="from_date" id="from_date" class="ml-2 px-2 py-1 rounded border border-gray-300" value="{{ from_date }}">
+        </div>
+        <div>
+            <label for="to_date" class="text-xs font-medium text-gray-700">To:</label>
+            <input type="date" name="to_date" id="to_date" class="ml-2 px-2 py-1 rounded border border-gray-300" value="{{ to_date }}">
+        </div>
+        <input type="hidden" name="sort" value="{{ sort }}">
+        <button type="submit" class="px-3 py-1 rounded bg-indigo-600 text-white text-xs font-semibold">Filter</button>
+    </form>
+    <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+            <tr>
+                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">
+                    Date
+                    <a href="{{ url_for('main.sessions', sort='asc' if sort == 'desc' else 'desc', doctor=doctor, patient=patient) }}" class="ml-2 text-xs text-indigo-600 hover:text-indigo-900">
+                        {% if sort == 'desc' %}
+                            ▲
+                        {% else %}
+                            ▼
+                        {% endif %}
+                    </a>
+                </th>
+                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Hour</th>
+                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Medic (User)</th>
+                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Patient Name</th>
+                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Total Amount</th>
+                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Payment Status</th>
+                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
+            </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
                 {% for session in sessions %}
                 <tr>
                     <td class="px-4 py-2 whitespace-nowrap">{{ session.session_date.strftime('%Y-%m-%d') }}</td>
