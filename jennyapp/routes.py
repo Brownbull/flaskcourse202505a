@@ -86,7 +86,7 @@ def dashboard():
     past_sessions.sort(key=lambda s: datetime.combine(s.session_date, s.session_time), reverse=True)
     return render_template('dashboard/dashboard.html', incoming_sessions=incoming_sessions, past_sessions=past_sessions)
 
-@main.route('/profile')
+@main.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():
     from .forms import ProfileForm
@@ -138,6 +138,17 @@ def profile():
         else:
             form.email.data = current_user.email
     return render_template('dashboard/profile.html', form=form)
+
+@main.route('/profile_image/<int:user_id>')
+@login_required
+def profile_image(user_id):
+    from .models import UserProfile
+    profile = UserProfile.query.filter_by(user_id=user_id).first()
+    if profile and profile.profile_picture:
+        from flask import send_file
+        import io
+        return send_file(io.BytesIO(profile.profile_picture), mimetype='image/jpeg')  # or detect mimetype
+    abort(404)
 
 @main.route('/patients')
 @login_required
