@@ -3,7 +3,7 @@
 	<nav class="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
 		<div class="flex lg:flex-1">
 			<a href="#" class="-m-1.5 p-1.5">
-				<span class="sr-only">Your Company</span>
+				<span class="sr-only">Jenny App</span>
 				<img class="h-8 w-auto"
 					src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600" alt="" />
 			</a>
@@ -19,13 +19,9 @@
 			</button>
 		</div>
 		<div class="hidden lg:flex lg:gap-x-12">
-			<a href="#" class="text-sm/6 font-semibold text-gray-900">Product</a>
-			<a href="#" class="text-sm/6 font-semibold text-gray-900">Features</a>
-			<a href="#" class="text-sm/6 font-semibold text-gray-900">Marketplace</a>
-			<a href="#" class="text-sm/6 font-semibold text-gray-900">Company</a>
-		</div>
-		<div class="hidden lg:flex lg:flex-1 lg:justify-end">
-			<a href="{{ url_for('main.login') }}" class="text-sm/6 font-semibold text-gray-900">Log in <span aria-hidden="true">&rarr;</span></a>
+			<a href="{{ url_for('main.login') }}" class="text-sm/6 font-semibold text-gray-900">Log in<span
+					aria-hidden="true">&rarr;</span></a>
+			<a href="{{ url_for('main.register') }}" class="text-sm/6 font-semibold text-gray-900">Register <span aria-hidden="true">+</span></a>
 		</div>
 	</nav>
 	<!-- Mobile menu, show/hide based on menu open state. -->
@@ -51,18 +47,12 @@
 			<div class="mt-6 flow-root">
 				<div class="-my-6 divide-y divide-gray-500/10">
 					<div class="space-y-2 py-6">
-						<a href="#"
-							class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">Product</a>
-						<a href="#"
-							class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">Features</a>
-						<a href="#"
-							class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">Marketplace</a>
-						<a href="#"
-							class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">Company</a>
-					</div>
-					<div class="py-6">
 						<a href="{{ url_for('main.login') }}"
 							class="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">Log in</a>
+					</div>
+					<div class="py-6">
+						<a href="{{ url_for('main.register') }}"
+							class="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">Register</a>
 					</div>
 				</div>
 			</div>
