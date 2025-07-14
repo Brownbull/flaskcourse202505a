@@ -9,7 +9,7 @@ UPLOAD_FOLDER = 'static/uploads'
 
 from .extensions import db
 from .forms import RegisterForm, LoginForm, PatientForm, SessionForm
-from .models import User, Patient, Session
+from .models import User, Patient, Session , SessionDocument
 
 main = Blueprint('main', __name__)
 @main.route('/')
@@ -269,8 +269,26 @@ def edit_session(session_id=None):
                 session_obj.payment_method = form.payment_method.data
                 session_obj.total_amount = form.total_amount.data
                 session_obj.payment_status = form.payment_status.data
-                session_obj.documents = form.documents.data  # Handle file uploads if needed
                 db.session.commit()
+                # Handle file uploads for update
+                if form.documents.data:
+                    upload_dir = os.path.join(current_app.root_path, UPLOAD_FOLDER)
+                    os.makedirs(upload_dir, exist_ok=True)
+                    for file in form.documents.data:
+                        if file and file.filename:
+                            filename = secure_filename(file.filename)
+                            file_path = os.path.join(upload_dir, filename)
+                            file.save(file_path)
+                            with open(file_path, 'rb') as f:
+                                file_bytes = f.read()
+                            doc = SessionDocument(
+                                session_id=session_obj.id,
+                                filename=filename,
+                                file_data=file_bytes,
+                                upload_date=datetime.now()
+                            )
+                            db.session.add(doc)
+                    db.session.commit()
             else:
                 # Create new session
                 patient = Patient.query.filter_by(full_name=form.patient_full_name.data).first()
@@ -278,7 +296,6 @@ def edit_session(session_id=None):
                     patient = Patient(full_name=form.patient_full_name.data)
                     db.session.add(patient)
                     db.session.commit()
-                    
                 session_obj = Session(
                     user_id=User.query.filter_by(email=form.doctor_email.data).first().id,
                     patient_id=patient.id,
@@ -292,11 +309,27 @@ def edit_session(session_id=None):
                     diagnostic=form.diagnostic.data,
                     payment_method=form.payment_method.data,
                     total_amount=form.total_amount.data,
-                    payment_status=form.payment_status.data,
-                    documents=form.documents.data  # Handle file uploads if needed
+                    payment_status=form.payment_status.data
                 )
                 db.session.add(session_obj)
                 db.session.commit()
+                # Handle file uploads for new session
+                if form.documents.data:
+                    upload_dir = os.path.join(current_app.root_path, UPLOAD_FOLDER)
+                    os.makedirs(upload_dir, exist_ok=True)
+                    for file in form.documents.data:
+                        if file and file.filename:
+                            filename = secure_filename(file.filename)
+                            file_path = os.path.join(upload_dir, filename)
+                            file.save(file_path)
+                            doc = SessionDocument(
+                                session_id=session_obj.id,
+                                filename=filename,
+                                filetype=file.mimetype,
+                                uploaded_at=datetime.now()
+                            )
+                            db.session.add(doc)
+                    db.session.commit()
             return redirect(url_for('main.sessions'))
         else:
             error = 'Form validation failed. Please check your input.'
