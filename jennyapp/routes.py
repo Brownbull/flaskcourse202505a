@@ -70,7 +70,21 @@ def logout():
 @main.route('/dashboard')
 @login_required
 def dashboard():
-    return render_template('dashboard/dashboard.html')
+    from datetime import datetime, time
+    now = datetime.now()
+    # Get sessions for the logged-in medic
+    all_sessions = Session.query.filter_by(doctor_email=current_user.email).all()
+    incoming_sessions = []
+    past_sessions = []
+    for session in all_sessions:
+        session_dt = datetime.combine(session.session_date, session.session_time)
+        if session_dt > now:
+            incoming_sessions.append(session)
+        else:
+            past_sessions.append(session)
+    incoming_sessions.sort(key=lambda s: datetime.combine(s.session_date, s.session_time))
+    past_sessions.sort(key=lambda s: datetime.combine(s.session_date, s.session_time), reverse=True)
+    return render_template('dashboard/dashboard.html', incoming_sessions=incoming_sessions, past_sessions=past_sessions)
 
 @main.route('/profile')
 @login_required
@@ -363,6 +377,9 @@ def delete_session(session_id):
     session = Session.query.get_or_404(session_id, description=f'session with id {session_id} not found')
     db.session.delete(session)
     db.session.commit()
+    next_url = request.args.get('next')
+    if next_url:
+        return redirect(next_url)
     return redirect(url_for('main.sessions'))
 
 @main.route('/calendar')
