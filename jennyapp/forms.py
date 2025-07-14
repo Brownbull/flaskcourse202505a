@@ -271,6 +271,20 @@ class SessionForm(FlaskForm):
     # FILES
     documents = MultipleFileField('Upload Documents', validators=[FileAllowed(['jpg', 'jpeg', 'png', 'gif', 'bmp', 'pdf', 'doc', 'docx', 'txt'], 'Images, PDF, Word, TXT only!')])
     
+class ProfileForm(FlaskForm):
+    about = TextAreaField('About', validators=[Length(max=500)], default='')
+    profile_picture = FileField('Profile Picture', validators=[FileAllowed(ALLOWED_IMAGE_EXTENSIONS, 'Images only!')])
+    full_name = StringField('Full Name', validators=[ Length(max=200)])
+    email = EmailField('Email', validators=[Optional(), Length(max=120), Email(message='Invalid email address.')])    
+    phone_number_1 = StringField('Phone Number', validators=[Length(max=20)])
+    phone_number_2 = StringField('Phone Number', validators=[Length(max=20)])
+    address_1 = StringField('Address', validators=[Length(max=200)])
+    address_2 = StringField('Address 2', validators=[Length(max=200)])
+    city = StringField('City', validators=[Length(max=100)])
+    region = SelectField('Region', choices=chile_regions, default=chile_regions[11])
+    country = SelectField('Country', choices=world_countries, default=world_countries[37])
+    zip_code = StringField('Zip Code', validators=[Length(max=20)])
+    notifications = BooleanField('Receive Notifications', default=False)
 
 
 

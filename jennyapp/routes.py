@@ -8,7 +8,7 @@ import os
 UPLOAD_FOLDER = 'static/uploads'
 
 from .extensions import db
-from .forms import RegisterForm, LoginForm, PatientForm, SessionForm
+from .forms import RegisterForm, LoginForm, PatientForm, SessionForm, ProfileForm
 from .models import User, Patient, Session , SessionDocument
 
 main = Blueprint('main', __name__)
@@ -89,7 +89,37 @@ def dashboard():
 @main.route('/profile')
 @login_required
 def profile():
-    return render_template('dashboard/profile.html')
+    form = ProfileForm(obj=current_user)
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            current_user.about = form.about.data
+            if form.profile_picture.data:
+                file = form.profile_picture.data
+                filename = secure_filename(file.filename)
+                file.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
+                current_user.profile_picture = filename
+            current_user.full_name = form.full_name.data
+            current_user.email = current_user.email  # Email cannot be changed
+            current_user.phone_number_1 = form.phone_number_1.data
+            current_user.phone_number_2 = form.phone_number_2.data
+            current_user.address_1 = form.address_1.data
+            current_user.address_2 = form.address_2.data
+            current_user.city = form.city.data
+            current_user.region = form.region.data
+            current_user.country = form.country.data
+            current_user.zip_code = form.zip_code.data
+            
+            db.session.commit()
+            return redirect(url_for('main.profile'))
+
+    context = {
+        'form': form
+    }
+
+    next_url = request.args.get('next')
+    if next_url:
+        return redirect(next_url)
+    return render_template('dashboard/profile.html', **context)
 
 @main.route('/patients')
 @login_required
@@ -382,12 +412,3 @@ def delete_session(session_id):
         return redirect(next_url)
     return redirect(url_for('main.sessions'))
 
-@main.route('/calendar')
-@login_required
-def calendar():
-    return render_template('dashboard/calendar.html')
-
-@main.route('/documents')
-@login_required
-def documents():
-    return render_template('dashboard/documents.html')
