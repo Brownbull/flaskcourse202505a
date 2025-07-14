@@ -89,37 +89,55 @@ def dashboard():
 @main.route('/profile')
 @login_required
 def profile():
-    form = ProfileForm(obj=current_user)
-    if request.method == 'POST':
-        if form.validate_on_submit():
-            current_user.about = form.about.data
-            if form.profile_picture.data:
-                file = form.profile_picture.data
-                filename = secure_filename(file.filename)
-                file.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
-                current_user.profile_picture = filename
-            current_user.full_name = form.full_name.data
-            current_user.email = current_user.email  # Email cannot be changed
-            current_user.phone_number_1 = form.phone_number_1.data
-            current_user.phone_number_2 = form.phone_number_2.data
-            current_user.address_1 = form.address_1.data
-            current_user.address_2 = form.address_2.data
-            current_user.city = form.city.data
-            current_user.region = form.region.data
-            current_user.country = form.country.data
-            current_user.zip_code = form.zip_code.data
-            
-            db.session.commit()
-            return redirect(url_for('main.profile'))
-
-    context = {
-        'form': form
-    }
-
-    next_url = request.args.get('next')
-    if next_url:
-        return redirect(next_url)
-    return render_template('dashboard/profile.html', **context)
+    from .forms import ProfileForm
+    from .models import UserProfile
+    from werkzeug.utils import secure_filename
+    import os
+    form = ProfileForm()
+    user_profile = UserProfile.query.filter_by(user_id=current_user.id).first()
+    if request.method == 'POST' and form.validate_on_submit():
+        if not user_profile:
+            user_profile = UserProfile(user_id=current_user.id)
+            db.session.add(user_profile)
+        user_profile.about = form.about.data
+        user_profile.full_name = form.full_name.data
+        user_profile.email = current_user.email  # Email is not editable
+        user_profile.phone_number_1 = form.phone_number_1.data
+        user_profile.phone_number_2 = form.phone_number_2.data
+        user_profile.address_1 = form.address_1.data
+        user_profile.address_2 = form.address_2.data
+        user_profile.city = form.city.data
+        user_profile.region = form.region.data
+        user_profile.country = form.country.data
+        user_profile.zip_code = form.zip_code.data
+        user_profile.notifications = form.notifications.data
+        # Handle profile picture upload
+        if form.profile_picture.data:
+            file = form.profile_picture.data
+            filename = secure_filename(file.filename)
+            user_profile.profile_picture_filename = filename
+            user_profile.profile_picture = file.read()
+        db.session.commit()
+        return redirect(url_for('main.profile'))
+    else:
+        # Pre-fill form with existing profile data
+        if user_profile:
+            form.about.data = user_profile.about
+            form.full_name.data = user_profile.full_name
+            form.email.data = current_user.email
+            form.phone_number_1.data = user_profile.phone_number_1
+            form.phone_number_2.data = user_profile.phone_number_2
+            form.address_1.data = user_profile.address_1
+            form.address_2.data = user_profile.address_2
+            form.city.data = user_profile.city
+            form.region.data = user_profile.region
+            form.country.data = user_profile.country
+            form.zip_code.data = user_profile.zip_code
+            form.notifications.data = user_profile.notifications
+            form.profile_picture.data = user_profile.profile_picture_filename
+        else:
+            form.email.data = current_user.email
+    return render_template('dashboard/profile.html', form=form)
 
 @main.route('/patients')
 @login_required
