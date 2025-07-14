@@ -60,10 +60,65 @@
                 <div class="sm:col-span-2 sm:col-start-1">
                     <label for="documents" class="block text-sm/6 font-medium text-gray-900">Documents</label>
                     <div class="mt-2">
-                        {{ form.documents() }}
+
+                        <!-- Documents Section -->
+                        <div class="mb-8">
+                            {{ form.documents(class="mb-4", id="documentInput") }}
+                            <ul id="documentList" class="mb-4"></ul>
+                            <ul id="existingDocumentList" class="mb-4">
+                                {% for doc in existing_docs %}
+                                <li class="flex items-center justify-between mb-2" data-docid="{{ doc.id }}">
+                                    <span>{{ doc.filename }}</span>
+                                    <button type="button" class="ml-4 text-red-600 hover:underline"
+                                        onclick="removeExistingFile({{ doc.id }})">Remove</button>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                            <input type="hidden" name="delete_documents" id="deleteDocuments" value="">
+                        </div>
+                        <script>
+                            const documentInput = document.getElementById('documentInput');
+                            const documentList = document.getElementById('documentList');
+                            let filesArray = [];
+
+                            documentInput.addEventListener('change', function (e) {
+                                filesArray = Array.from(e.target.files);
+                                updateFileList();
+                            });
+
+                            function updateFileList() {
+                                documentList.innerHTML = '';
+                                filesArray.forEach((file, idx) => {
+                                    const li = document.createElement('li');
+                                    li.className = "flex items-center justify-between mb-2";
+                                    li.innerHTML = `
+                                <span>${file.name}</span>
+                                <button type="button" class="ml-4 text-red-600 hover:underline" onclick="removeFile(${idx})">Remove</button>
+                              `;
+                                    documentList.appendChild(li);
+                                });
+                            }
+
+                            window.removeFile = function (idx) {
+                                filesArray.splice(idx, 1);
+                                // Create a new DataTransfer to update the input
+                                const dt = new DataTransfer();
+                                filesArray.forEach(file => dt.items.add(file));
+                                documentInput.files = dt.files;
+                                updateFileList();
+                            };
+                            let deleteDocIds = [];
+
+                            window.removeExistingFile = function (docId) {
+                                deleteDocIds.push(docId);
+                                document.querySelector('li[data-docid="' + docId + '"]').remove();
+                                document.getElementById('deleteDocuments').value = deleteDocIds.join(',');
+                            };
+                        </script>
+
                     </div>
                 </div>
-                <div class="sm:col-span-2">
+                <div class="sm:col-span-2 sm:col-start-1">
                     <label for="consent" class="block text-sm/6 font-medium text-gray-900">Consent</label>
                     <div class="mt-2">
                         <div class="flex h-6 shrink-0 items-center">

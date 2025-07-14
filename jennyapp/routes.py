@@ -241,6 +241,7 @@ def edit_session(session_id=None):
     session_obj = None
     doctor_choices = [(u.email, u.email) for u in User.query.all()]
     patient_choices = [(p.full_name, p.full_name) for p in Patient.query.all()]
+    existing_docs = []
 
     if session_id:
         session_obj = Session.query.get_or_404(session_id, description=f'Session with id {session_id} not found')
@@ -249,10 +250,13 @@ def edit_session(session_id=None):
         form.patient_full_name.choices = patient_choices
         form.doctor_email.data = session_obj.doctor_email
         form.patient_full_name.data = session_obj.patient_full_name
+        existing_docs = SessionDocument.query.filter_by(session_id=session_obj.id).all()
+
     else:
         form = SessionForm()
         form.doctor_email.choices = doctor_choices
         form.patient_full_name.choices = patient_choices
+        existing_docs = []
 
     if request.method == 'POST':
         if form.validate_on_submit():
@@ -338,7 +342,8 @@ def edit_session(session_id=None):
         'error': error,
         'form': form,
         'session_id': session_id,
-        'session_obj': session_obj
+        'session_obj': session_obj,
+        'existing_docs': existing_docs
     }
     return render_template('dashboard/sessions/ses_edit.html', **context)
 
